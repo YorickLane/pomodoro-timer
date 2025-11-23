@@ -1,0 +1,33 @@
+{
+  "title": "专注时间",
+  "start": "开始",
+  "pause": "暂停",
+  "resume": "继续",
+  "skip": "跳过",
+  "reset": "重置",
+
+  "status": {
+    "working": "专注工作中",
+    "short_break": "短休息",
+    "long_break": "长休息",
+    "idle": "准备开始",
+    "paused": "已暂停"
+  },
+
+  "hints": {
+    "ready": "点击「开始」按钮开始一个 {{duration}} 分钟的番茄钟",
+    "working": "保持专注，远离干扰！",
+    "break": "放松一下，休息片刻"
+  },
+
+  "today_stats": {
+    "completed": "已完成",
+    "goal": "今日目标",
+    "focus_minutes": "专注分钟"
+  },
+
+  "completion": {
+    "title": "今日完成度",
+    "percentage": "{{percent}}%"
+  }
+}

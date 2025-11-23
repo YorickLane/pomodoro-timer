@@ -1,0 +1,60 @@
+{
+  "title": "Settings",
+
+  "duration": {
+    "title": "Duration Settings",
+    "work": {
+      "label": "Work Duration",
+      "hint": "Focus time for each pomodoro"
+    },
+    "short_break": {
+      "label": "Short Break",
+      "hint": "Rest time after each pomodoro"
+    },
+    "long_break": {
+      "label": "Long Break",
+      "hint": "Rest time after 4 pomodoros"
+    }
+  },
+
+  "goal": {
+    "title": "Goal Settings",
+    "daily_goal": {
+      "label": "Daily Goal",
+      "hint": "Number of pomodoros per day"
+    }
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "enable": {
+      "label": "Enable Notifications",
+      "hint": "Remind when work/break ends"
+    },
+    "sound": {
+      "label": "Enable Sound",
+      "hint": "Play sound with notifications"
+    },
+    "test_button": "Send Test Notification",
+    "test_success": "Test notification sent!",
+    "permission_required": "Please enable notification permissions"
+  },
+
+  "auto_control": {
+    "title": "Auto Control",
+    "auto_start_break": {
+      "label": "Auto Start Break",
+      "hint": "Automatically start break after work"
+    },
+    "auto_start_work": {
+      "label": "Auto Start Work",
+      "hint": "Automatically start work after break"
+    }
+  },
+
+  "language": {
+    "title": "Language",
+    "label": "App Language",
+    "hint": "Change display language"
+  }
+}

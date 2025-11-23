@@ -2,10 +2,12 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { usePomodoroStore } from '@/store/usePomodoroStore';
 
 export default function StatsScreen() {
+  const { t } = useTranslation();
   const { colors } = useThemeColors();
   const {
     initialize,
@@ -54,16 +56,7 @@ export default function StatsScreen() {
 
   // 获取会话标题
   const getSessionTitle = (type: string) => {
-    switch (type) {
-      case 'work':
-        return '工作';
-      case 'short_break':
-        return '短休息';
-      case 'long_break':
-        return '长休息';
-      default:
-        return '未知';
-    }
+    return t(`stats.sessions.types.${type}`, type);
   };
 
   return (
@@ -71,7 +64,7 @@ export default function StatsScreen() {
       {/* 今日概览 */}
       <View style={[styles.overviewCard, { backgroundColor: colors.cardBackground }]}>
         <Text style={[styles.overviewTitle, { color: colors.text }]}>
-          今日概览
+          {t('stats.overview.title')}
         </Text>
 
         <View style={styles.overviewGrid}>
@@ -83,7 +76,7 @@ export default function StatsScreen() {
               {todayStats?.completed_count || 0}
             </Text>
             <Text style={[styles.overviewLabel, { color: colors.textSecondary }]}>
-              完成番茄钟
+              {t('stats.overview.completed_pomodoros')}
             </Text>
           </View>
 
@@ -95,7 +88,7 @@ export default function StatsScreen() {
               {todayStats?.total_focus_minutes || 0}
             </Text>
             <Text style={[styles.overviewLabel, { color: colors.textSecondary }]}>
-              专注分钟
+              {t('stats.overview.focus_minutes')}
             </Text>
           </View>
 
@@ -107,7 +100,7 @@ export default function StatsScreen() {
               {Math.round(todayStats?.completion_rate || 0)}%
             </Text>
             <Text style={[styles.overviewLabel, { color: colors.textSecondary }]}>
-              完成率
+              {t('stats.overview.completion_rate')}
             </Text>
           </View>
         </View>
@@ -116,17 +109,17 @@ export default function StatsScreen() {
       {/* 今日会话列表 */}
       <View style={styles.sessionsSection}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          今日记录 ({sessions.length})
+          {t('stats.sessions.title')} {t('stats.sessions.count', { count: sessions.length })}
         </Text>
 
         {sessions.length === 0 ? (
           <View style={[styles.emptyContainer, { backgroundColor: colors.cardBackground }]}>
             <Ionicons name="calendar-outline" size={48} color={colors.textTertiary} />
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              还没有完成任何番茄钟
+              {t('stats.sessions.empty')}
             </Text>
             <Text style={[styles.emptyHint, { color: colors.textTertiary }]}>
-              开始你的第一个番茄钟吧！
+              {t('stats.sessions.empty_hint')}
             </Text>
           </View>
         ) : (
@@ -162,7 +155,7 @@ export default function StatsScreen() {
               <View style={styles.sessionRight}>
                 <View style={styles.sessionDuration}>
                   <Text style={[styles.durationText, { color: colors.text }]}>
-                    {session.duration_minutes} 分钟
+                    {t('common.minutes', { count: session.duration_minutes })}
                   </Text>
                   {session.completed ? (
                     <Ionicons name="checkmark-circle" size={20} color={colors.success} />

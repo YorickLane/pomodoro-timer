@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, useColorScheme } from 'react-native';
 import 'react-native-reanimated';
+import '@/locales'; // 初始化 i18n
 
 import { initDatabase } from '@/lib/db';
 
@@ -49,8 +50,8 @@ export default function RootLayout() {
         <Stack.Screen
           name="privacy"
           options={{
-            title: '隐私政策',
-            headerBackTitle: '返回',
+            title: 'Privacy Policy',
+            headerBackTitle: 'Back',
           }}
         />
       </Stack>

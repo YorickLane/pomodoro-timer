@@ -1,0 +1,33 @@
+{
+  "title": "Focus Time",
+  "start": "Start",
+  "pause": "Pause",
+  "resume": "Resume",
+  "skip": "Skip",
+  "reset": "Reset",
+
+  "status": {
+    "working": "Working",
+    "short_break": "Short Break",
+    "long_break": "Long Break",
+    "idle": "Ready to start",
+    "paused": "Paused"
+  },
+
+  "hints": {
+    "ready": "Tap 'Start' to begin a {{duration}} minute pomodoro",
+    "working": "Stay focused, avoid distractions!",
+    "break": "Relax and take a break"
+  },
+
+  "today_stats": {
+    "completed": "Completed",
+    "goal": "Today's Goal",
+    "focus_minutes": "Focus Min"
+  },
+
+  "completion": {
+    "title": "Today's Progress",
+    "percentage": "{{percent}}%"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "work_complete": {
+    "title": "Pomodoro Complete 🍅",
+    "body": "Great job! Take a 5-minute break"
+  },
+  "short_break_complete": {
+    "title": "Break Over ⏰",
+    "body": "Ready to continue working?"
+  },
+  "long_break_complete": {
+    "title": "Long Break Over 🎉",
+    "body": "Completed 4 pomodoros! Keep it up"
+  },
+  "test": {
+    "title": "Test Notification 🍅",
+    "body": "Notifications are working!"
+  }
+}

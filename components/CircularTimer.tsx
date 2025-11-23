@@ -10,6 +10,7 @@ import Animated, {
   withTiming,
   withSpring,
 } from 'react-native-reanimated';
+import { useTranslation } from 'react-i18next';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { useEffect } from 'react';
 import { TimerStatus } from '@/types/models';
@@ -31,6 +32,7 @@ export function CircularTimer({
   size = 280,
   strokeWidth = 24,
 }: CircularTimerProps) {
+  const { t } = useTranslation();
   const { colors } = useThemeColors();
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
@@ -73,18 +75,7 @@ export function CircularTimer({
 
   // 获取状态文本
   const getStatusText = () => {
-    switch (status) {
-      case 'working':
-        return '专注工作中';
-      case 'short_break':
-        return '短休息';
-      case 'long_break':
-        return '长休息';
-      case 'paused':
-        return '已暂停';
-      default:
-        return '准备开始';
-    }
+    return t(`timer.status.${status}`);
   };
 
   // 动画进度圆环属性

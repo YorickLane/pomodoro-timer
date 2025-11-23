@@ -4,6 +4,7 @@
  */
 
 import { Platform } from 'react-native';
+import i18n from '@/locales';
 
 // 条件导入：仅在非 Web 平台导入 expo-notifications
 let Notifications: typeof import('expo-notifications') | null = null;
@@ -68,8 +69,8 @@ export async function notifyWorkComplete(soundEnabled: boolean = true): Promise<
 
   await Notifications!.scheduleNotificationAsync({
     content: {
-      title: '番茄钟完成 🍅',
-      body: '干得好！休息 5 分钟吧',
+      title: i18n.t('notifications.work_complete.title'),
+      body: i18n.t('notifications.work_complete.body'),
       sound: soundEnabled,
     },
     trigger,
@@ -91,8 +92,8 @@ export async function notifyShortBreakComplete(soundEnabled: boolean = true): Pr
 
   await Notifications!.scheduleNotificationAsync({
     content: {
-      title: '休息结束 ⏰',
-      body: '准备好继续工作了吗？',
+      title: i18n.t('notifications.short_break_complete.title'),
+      body: i18n.t('notifications.short_break_complete.body'),
       sound: soundEnabled,
     },
     trigger,
@@ -114,8 +115,8 @@ export async function notifyLongBreakComplete(soundEnabled: boolean = true): Pro
 
   await Notifications!.scheduleNotificationAsync({
     content: {
-      title: '长休息结束 🎉',
-      body: '完成了 4 个番茄钟！继续加油',
+      title: i18n.t('notifications.long_break_complete.title'),
+      body: i18n.t('notifications.long_break_complete.body'),
       sound: soundEnabled,
     },
     trigger,
@@ -140,8 +141,8 @@ export async function sendTestNotification(): Promise<void> {
     // Web 平台使用浏览器通知（可选）
     if (Platform.OS === 'web' && 'Notification' in window) {
       if (Notification.permission === 'granted') {
-        new Notification('测试通知 🍅', {
-          body: '通知功能正常！',
+        new Notification(i18n.t('notifications.test.title'), {
+          body: i18n.t('notifications.test.body'),
           icon: '/favicon.png',
         });
       }
@@ -156,8 +157,8 @@ export async function sendTestNotification(): Promise<void> {
 
   await Notifications!.scheduleNotificationAsync({
     content: {
-      title: '测试通知 🍅',
-      body: '通知功能正常！',
+      title: i18n.t('notifications.test.title'),
+      body: i18n.t('notifications.test.body'),
       sound: true,
     },
     trigger,

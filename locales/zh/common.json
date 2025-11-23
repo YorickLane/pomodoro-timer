@@ -1,0 +1,13 @@
+{
+  "app_name": "番茄钟",
+  "loading": "加载中...",
+  "confirm": "确认",
+  "cancel": "取消",
+  "delete": "删除",
+  "save": "保存",
+  "back": "返回",
+  "minutes": "{{count}} 分钟",
+  "minutes_full": "{{count}} 分钟",
+  "count_unit": "{{count}} 个",
+  "privacy_policy": "隐私政策"
+}

@@ -1,0 +1,23 @@
+{
+  "title": "我的统计",
+
+  "overview": {
+    "title": "今日概览",
+    "completed_pomodoros": "完成番茄钟",
+    "focus_minutes": "专注分钟",
+    "completion_rate": "完成率"
+  },
+
+  "sessions": {
+    "title": "今日记录",
+    "count": "({{count}})",
+    "empty": "还没有完成任何番茄钟",
+    "empty_hint": "开始你的第一个番茄钟吧！",
+
+    "types": {
+      "work": "工作",
+      "short_break": "短休息",
+      "long_break": "长休息"
+    }
+  }
+}

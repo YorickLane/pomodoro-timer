@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native';
 import { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
+import i18n from '@/locales';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { usePomodoroStore } from '@/store/usePomodoroStore';
 import {
@@ -9,6 +11,7 @@ import {
 } from '@/lib/notifications';
 
 export default function SettingsScreen() {
+  const { t } = useTranslation();
   const { colors } = useThemeColors();
   const { settings, updateSetting, initialize } = usePomodoroStore();
 
@@ -20,12 +23,17 @@ export default function SettingsScreen() {
   const handleTestNotification = async () => {
     const hasPermission = await requestNotificationPermissions();
     if (!hasPermission) {
-      Alert.alert('提示', '请先开启通知权限');
+      Alert.alert(t('common.confirm'), t('settings.notifications.permission_required'));
       return;
     }
 
     await sendTestNotification();
-    Alert.alert('成功', '测试通知已发送！');
+    Alert.alert(t('common.confirm'), t('settings.notifications.test_success'));
+  };
+
+  // 切换语言
+  const changeLanguage = (lang: string) => {
+    i18n.changeLanguage(lang);
   };
 
   // 调整时长
@@ -47,7 +55,7 @@ export default function SettingsScreen() {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text style={[styles.loadingText, { color: colors.textSecondary }]}>
-          加载中...
+          {t('common.loading')}
         </Text>
       </View>
     );
@@ -55,10 +63,63 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* 语言设置 */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          {t('settings.language.title')}
+        </Text>
+
+        <View style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}>
+          <View style={styles.settingLeft}>
+            <Ionicons name="language" size={24} color={colors.primary} />
+            <View style={styles.settingInfo}>
+              <Text style={[styles.settingLabel, { color: colors.text }]}>
+                {t('settings.language.label')}
+              </Text>
+              <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
+                {i18n.language === 'zh' ? '中文' : 'English'}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.languageButtons}>
+            <TouchableOpacity
+              style={[
+                styles.languageButton,
+                { borderColor: colors.border },
+                i18n.language === 'en' && { backgroundColor: colors.primary },
+              ]}
+              onPress={() => changeLanguage('en')}
+            >
+              <Text style={[
+                styles.languageButtonText,
+                { color: i18n.language === 'en' ? 'white' : colors.text },
+              ]}>
+                EN
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.languageButton,
+                { borderColor: colors.border },
+                i18n.language === 'zh' && { backgroundColor: colors.primary },
+              ]}
+              onPress={() => changeLanguage('zh')}
+            >
+              <Text style={[
+                styles.languageButtonText,
+                { color: i18n.language === 'zh' ? 'white' : colors.text },
+              ]}>
+                中文
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
       {/* 时长设置 */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          时长设置
+          {t('settings.duration.title')}
         </Text>
 
         {/* 工作时长 */}
@@ -67,10 +128,10 @@ export default function SettingsScreen() {
             <Ionicons name="timer" size={24} color={colors.working} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                工作时长
+                {t('settings.duration.work.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                每个番茄钟的专注时间
+                {t('settings.duration.work.hint')}
               </Text>
             </View>
           </View>
@@ -82,7 +143,7 @@ export default function SettingsScreen() {
               <Ionicons name="remove" size={20} color={colors.text} />
             </TouchableOpacity>
             <Text style={[styles.counterValue, { color: colors.text }]}>
-              {settings.work_duration} 分钟
+              {t('common.minutes', { count: settings.work_duration })}
             </Text>
             <TouchableOpacity
               style={[styles.counterButton, { borderColor: colors.border }]}
@@ -99,10 +160,10 @@ export default function SettingsScreen() {
             <Ionicons name="cafe" size={24} color={colors.shortBreak} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                短休息时长
+                {t('settings.duration.short_break.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                每个番茄钟后的休息时间
+                {t('settings.duration.short_break.hint')}
               </Text>
             </View>
           </View>
@@ -114,7 +175,7 @@ export default function SettingsScreen() {
               <Ionicons name="remove" size={20} color={colors.text} />
             </TouchableOpacity>
             <Text style={[styles.counterValue, { color: colors.text }]}>
-              {settings.short_break_duration} 分钟
+              {t('common.minutes', { count: settings.short_break_duration })}
             </Text>
             <TouchableOpacity
               style={[styles.counterButton, { borderColor: colors.border }]}
@@ -131,10 +192,10 @@ export default function SettingsScreen() {
             <Ionicons name="bed" size={24} color={colors.longBreak} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                长休息时长
+                {t('settings.duration.long_break.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                完成 4 个番茄钟后的休息时间
+                {t('settings.duration.long_break.hint')}
               </Text>
             </View>
           </View>
@@ -146,7 +207,7 @@ export default function SettingsScreen() {
               <Ionicons name="remove" size={20} color={colors.text} />
             </TouchableOpacity>
             <Text style={[styles.counterValue, { color: colors.text }]}>
-              {settings.long_break_duration} 分钟
+              {t('common.minutes', { count: settings.long_break_duration })}
             </Text>
             <TouchableOpacity
               style={[styles.counterButton, { borderColor: colors.border }]}
@@ -161,7 +222,7 @@ export default function SettingsScreen() {
       {/* 目标设置 */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          目标设置
+          {t('settings.goal.title')}
         </Text>
 
         <View style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}>
@@ -169,10 +230,10 @@ export default function SettingsScreen() {
             <Ionicons name="flag" size={24} color={colors.primary} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                每日目标
+                {t('settings.goal.daily_goal.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                每天完成的番茄钟数量
+                {t('settings.goal.daily_goal.hint')}
               </Text>
             </View>
           </View>
@@ -184,7 +245,7 @@ export default function SettingsScreen() {
               <Ionicons name="remove" size={20} color={colors.text} />
             </TouchableOpacity>
             <Text style={[styles.counterValue, { color: colors.text }]}>
-              {settings.daily_goal} 个
+              {t('common.count_unit', { count: settings.daily_goal })}
             </Text>
             <TouchableOpacity
               style={[styles.counterButton, { borderColor: colors.border }]}
@@ -199,7 +260,7 @@ export default function SettingsScreen() {
       {/* 通知设置 */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          通知设置
+          {t('settings.notifications.title')}
         </Text>
 
         <View style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}>
@@ -207,10 +268,10 @@ export default function SettingsScreen() {
             <Ionicons name="notifications" size={24} color={colors.primary} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                启用通知
+                {t('settings.notifications.enable.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                在工作/休息结束时提醒
+                {t('settings.notifications.enable.hint')}
               </Text>
             </View>
           </View>
@@ -227,10 +288,10 @@ export default function SettingsScreen() {
             <Ionicons name="volume-high" size={24} color={colors.warning} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                启用声音
+                {t('settings.notifications.sound.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                通知时播放提示音
+                {t('settings.notifications.sound.hint')}
               </Text>
             </View>
           </View>
@@ -248,7 +309,7 @@ export default function SettingsScreen() {
         >
           <Ionicons name="mail" size={20} color={colors.buttonText} />
           <Text style={[styles.testButtonText, { color: colors.buttonText }]}>
-            发送测试通知
+            {t('settings.notifications.test_button')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -256,7 +317,7 @@ export default function SettingsScreen() {
       {/* 自动控制 */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
-          自动控制
+          {t('settings.auto_control.title')}
         </Text>
 
         <View style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}>
@@ -264,10 +325,10 @@ export default function SettingsScreen() {
             <Ionicons name="play-circle" size={24} color={colors.success} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                自动开始休息
+                {t('settings.auto_control.auto_start_break.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                工作结束后自动开始休息
+                {t('settings.auto_control.auto_start_break.hint')}
               </Text>
             </View>
           </View>
@@ -284,10 +345,10 @@ export default function SettingsScreen() {
             <Ionicons name="timer" size={24} color={colors.working} />
             <View style={styles.settingInfo}>
               <Text style={[styles.settingLabel, { color: colors.text }]}>
-                自动开始工作
+                {t('settings.auto_control.auto_start_work.label')}
               </Text>
               <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
-                休息结束后自动开始工作
+                {t('settings.auto_control.auto_start_work.hint')}
               </Text>
             </View>
           </View>
@@ -379,6 +440,22 @@ const styles = StyleSheet.create({
   },
   testButtonText: {
     fontSize: 15,
+    fontWeight: '600',
+  },
+  languageButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  languageButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    minWidth: 60,
+    alignItems: 'center',
+  },
+  languageButtonText: {
+    fontSize: 14,
     fontWeight: '600',
   },
 });

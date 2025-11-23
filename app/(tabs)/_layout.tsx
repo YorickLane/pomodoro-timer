@@ -1,10 +1,12 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 import { useThemeColors } from '@/hooks/useThemeColors';
 
 export default function TabLayout() {
+  const { t } = useTranslation();
   const { colors } = useThemeColors();
 
   return (
@@ -24,24 +26,24 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: '番茄钟',
-          headerTitle: '专注时间',
+          title: t('timer.title'),
+          headerTitle: t('timer.title'),
           tabBarIcon: ({ color }) => <Ionicons name="timer-outline" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="stats"
         options={{
-          title: '统计',
-          headerTitle: '我的统计',
+          title: t('stats.title'),
+          headerTitle: t('stats.title'),
           tabBarIcon: ({ color }) => <Ionicons name="bar-chart-outline" size={24} color={color} />,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: '设置',
-          headerTitle: '设置',
+          title: t('settings.title'),
+          headerTitle: t('settings.title'),
           tabBarIcon: ({ color }) => <Ionicons name="settings-outline" size={24} color={color} />,
         }}
       />

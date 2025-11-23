@@ -1,11 +1,13 @@
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { usePomodoroStore } from '@/store/usePomodoroStore';
 import { CircularTimer } from '@/components/CircularTimer';
 
 export default function TimerScreen() {
+  const { t } = useTranslation();
   const { colors } = useThemeColors();
   const {
     initialize,
@@ -76,7 +78,7 @@ export default function TimerScreen() {
               {todayStats?.completed_count || 0}
             </Text>
             <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
-              已完成
+              {t('timer.today_stats.completed')}
             </Text>
           </View>
           <View style={styles.statDivider} />
@@ -85,7 +87,7 @@ export default function TimerScreen() {
               {settings?.daily_goal || 8}
             </Text>
             <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
-              今日目标
+              {t('timer.today_stats.goal')}
             </Text>
           </View>
           <View style={styles.statDivider} />
@@ -94,7 +96,7 @@ export default function TimerScreen() {
               {todayStats?.total_focus_minutes || 0}
             </Text>
             <Text style={[styles.statLabel, { color: colors.textSecondary }]}>
-              专注分钟
+              {t('timer.today_stats.focus_minutes')}
             </Text>
           </View>
         </View>
@@ -127,7 +129,7 @@ export default function TimerScreen() {
             color="white"
           />
           <Text style={styles.primaryButtonText}>
-            {timerStatus === 'paused' ? '继续' : '开始'}
+            {timerStatus === 'paused' ? t('timer.resume') : t('timer.start')}
           </Text>
         </TouchableOpacity>
 
@@ -139,7 +141,7 @@ export default function TimerScreen() {
           >
             <Ionicons name="pause" size={24} color={colors.text} />
             <Text style={[styles.secondaryButtonText, { color: colors.text }]}>
-              暂停
+              {t('timer.pause')}
             </Text>
           </TouchableOpacity>
         )}
@@ -152,7 +154,7 @@ export default function TimerScreen() {
           >
             <Ionicons name="play-forward" size={24} color={colors.text} />
             <Text style={[styles.secondaryButtonText, { color: colors.text }]}>
-              跳过
+              {t('timer.skip')}
             </Text>
           </TouchableOpacity>
         )}
@@ -162,17 +164,17 @@ export default function TimerScreen() {
       <View style={styles.hintContainer}>
         {timerStatus === 'idle' && (
           <Text style={[styles.hintText, { color: colors.textTertiary }]}>
-            点击"开始"按钮开始一个 {settings?.work_duration || 25} 分钟的番茄钟
+            {t('timer.hints.ready', { duration: settings?.work_duration || 25 })}
           </Text>
         )}
         {timerStatus === 'working' && (
           <Text style={[styles.hintText, { color: colors.textTertiary }]}>
-            保持专注，远离干扰！
+            {t('timer.hints.working')}
           </Text>
         )}
         {(timerStatus === 'short_break' || timerStatus === 'long_break') && (
           <Text style={[styles.hintText, { color: colors.textTertiary }]}>
-            放松一下，休息片刻
+            {t('timer.hints.break')}
           </Text>
         )}
       </View>
@@ -182,10 +184,10 @@ export default function TimerScreen() {
         <View style={[styles.progressContainer, { backgroundColor: colors.cardBackground }]}>
           <View style={styles.progressHeader}>
             <Text style={[styles.progressTitle, { color: colors.text }]}>
-              今日完成度
+              {t('timer.completion.title')}
             </Text>
             <Text style={[styles.progressPercentage, { color: colors.primary }]}>
-              {Math.round(todayStats.completion_rate)}%
+              {t('timer.completion.percentage', { percent: Math.round(todayStats.completion_rate) })}
             </Text>
           </View>
           <View style={[styles.progressBarBackground, { backgroundColor: colors.progressBackground }]}>

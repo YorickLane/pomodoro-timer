@@ -1,0 +1,60 @@
+{
+  "title": "设置",
+
+  "duration": {
+    "title": "时长设置",
+    "work": {
+      "label": "工作时长",
+      "hint": "每个番茄钟的专注时间"
+    },
+    "short_break": {
+      "label": "短休息时长",
+      "hint": "每个番茄钟后的休息时间"
+    },
+    "long_break": {
+      "label": "长休息时长",
+      "hint": "完成 4 个番茄钟后的休息时间"
+    }
+  },
+
+  "goal": {
+    "title": "目标设置",
+    "daily_goal": {
+      "label": "每日目标",
+      "hint": "每天完成的番茄钟数量"
+    }
+  },
+
+  "notifications": {
+    "title": "通知设置",
+    "enable": {
+      "label": "启用通知",
+      "hint": "在工作/休息结束时提醒"
+    },
+    "sound": {
+      "label": "启用声音",
+      "hint": "通知时播放提示音"
+    },
+    "test_button": "发送测试通知",
+    "test_success": "测试通知已发送！",
+    "permission_required": "请先开启通知权限"
+  },
+
+  "auto_control": {
+    "title": "自动控制",
+    "auto_start_break": {
+      "label": "自动开始休息",
+      "hint": "工作结束后自动开始休息"
+    },
+    "auto_start_work": {
+      "label": "自动开始工作",
+      "hint": "休息结束后自动开始工作"
+    }
+  },
+
+  "language": {
+    "title": "语言设置",
+    "label": "应用语言",
+    "hint": "更改显示语言"
+  }
+}

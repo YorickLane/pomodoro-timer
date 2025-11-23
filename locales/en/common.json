@@ -1,0 +1,13 @@
+{
+  "app_name": "Pomodoro Timer",
+  "loading": "Loading...",
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "save": "Save",
+  "back": "Back",
+  "minutes": "{{count}} min",
+  "minutes_full": "{{count}} minutes",
+  "count_unit": "{{count}}",
+  "privacy_policy": "Privacy Policy"
+}
