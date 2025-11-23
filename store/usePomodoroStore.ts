@@ -55,6 +55,9 @@ const timer = new PomodoroTimer();
 export const usePomodoroStore = create<PomodoroState>((set, get) => {
   // 订阅计时器状态变化
   timer.subscribe((timerState) => {
+    // 保存之前的状态，用于判断计时结束时是工作还是休息
+    const previousStatus = get().timerStatus;
+
     set({
       timerStatus: timerState.status,
       remainingSeconds: timerState.remainingSeconds,
@@ -64,7 +67,7 @@ export const usePomodoroStore = create<PomodoroState>((set, get) => {
     // 计时结束时的处理
     if (timerState.remainingSeconds === 0 && timerState.status === 'idle') {
       const state = get();
-      const wasWorking = state.timerStatus === 'working';
+      const wasWorking = previousStatus === 'working';
 
       if (wasWorking) {
         // 工作结束
@@ -83,9 +86,10 @@ export const usePomodoroStore = create<PomodoroState>((set, get) => {
         }
       } else {
         // 休息结束
-        const isLongBreak = state.timerStatus === 'long_break';
+        const isLongBreak = previousStatus === 'long_break';
+        const isShortBreak = previousStatus === 'short_break';
 
-        if (state.settings?.notification_enabled) {
+        if (state.settings?.notification_enabled && (isLongBreak || isShortBreak)) {
           if (isLongBreak) {
             notifyLongBreakComplete(state.settings.sound_enabled);
           } else {
@@ -94,7 +98,7 @@ export const usePomodoroStore = create<PomodoroState>((set, get) => {
         }
 
         // 自动开始工作
-        if (state.settings?.auto_start_work) {
+        if (state.settings?.auto_start_work && (isLongBreak || isShortBreak)) {
           setTimeout(() => get().startWork(), 1000);
         }
       }

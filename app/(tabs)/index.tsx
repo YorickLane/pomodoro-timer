@@ -244,8 +244,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: 32,
     marginTop: 20,
+    flexWrap: 'wrap',
   },
   primaryButton: {
     flexDirection: 'row',
