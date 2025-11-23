@@ -2,35 +2,38 @@
 
 简洁、专注、高效。一款优雅的番茄工作法计时器，帮助你提升专注力和工作效率。
 
-## ✨ 核心特性
+## ✨ Core Features
 
-- ⏱️ **经典番茄钟** - 25分钟工作 + 5分钟短休息 + 15分钟长休息
-- 📊 **实时统计** - 今日完成数、专注时长、完成率
-- 🔔 **智能提醒** - 工作和休息结束时的通知提醒
-- ⚙️ **灵活设置** - 自定义时长、目标、自动控制
-- 🌙 **深色模式** - 完整的明暗主题支持
-- 🔒 **隐私安全** - 数据完全本地存储，离线可用
-- ⏸️ **完整控制** - 暂停、恢复、跳过功能
-- 📝 **记录管理** - 查看和管理所有会话记录
+- ⏱️ **Classic Pomodoro** - 25min work + 5min short break + 15min long break
+- 📊 **Real-time Stats** - Completed count, focus time, completion rate
+- 🔔 **Smart Notifications** - Alerts when work/break ends
+- ⚙️ **Flexible Settings** - Customize duration, goals, auto control
+- 🌙 **Dark Mode** - Full light/dark theme support
+- 🔒 **Privacy First** - All data stored locally, works offline
+- ⏸️ **Full Control** - Pause, resume, skip features
+- 📝 **Session Management** - View and manage all sessions
+- 🌍 **Internationalization** - English (default) + Chinese support
 
-## 🎯 项目状态
+## 🎯 Project Status
 
-**当前版本：** v1.0.1 - MVP 完成 ✅
+**Current Version:** v1.1.0 - MVP Complete + i18n ✅
 
-**已完成功能：**
-- ✅ 精确计时器（误差 < 1 秒）
-- ✅ 状态机（空闲 → 工作 → 休息 → 循环）
-- ✅ 数据持久化（跨平台存储）
-- ✅ 三个完整页面（计时器、统计、设置）
-- ✅ 通知系统
-- ✅ 自动控制功能
-- ✅ 深色模式
-- ✅ 所有核心逻辑 bug 已修复
+**Completed Features:**
+- ✅ Accurate timer (< 1s error)
+- ✅ State machine (idle → work → break → loop)
+- ✅ Cross-platform data persistence
+- ✅ Three complete pages (timer, stats, settings)
+- ✅ Notification system (local notifications)
+- ✅ Auto control features
+- ✅ Dark mode support
+- ✅ Full internationalization (EN + ZH)
+- ✅ All core bugs fixed
 
-**测试状态：**
-- ✅ TypeScript 编译通过
-- ✅ 真机测试通过
-- ✅ 核心功能验证完成
+**Testing Status:**
+- ✅ TypeScript compiles successfully
+- ✅ Real device tested
+- ✅ Core functionality verified
+- ✅ i18n tested (EN + ZH)
 
 ## 📋 文档索引
 
@@ -144,19 +147,56 @@ eas build --platform all
 eas submit
 ```
 
-## 🐛 已知问题
+## 🐛 Known Issues & Notes
 
-- ⚠️ Expo Go 中通知功能受限，建议使用 development build
-- ⚠️ Web 平台通知功能暂未实现
+### About Expo Go Notifications ERROR
 
-## 🔮 未来计划（V1.1+）
+You may see this ERROR in Expo Go:
+```
+ERROR expo-notifications: Android Push notifications (remote notifications)
+functionality provided by expo-notifications was removed from Expo Go
+```
 
-- 📈 7日/30日统计图表
-- 🏷️ 任务标签（学习、工作、阅读等）
-- 🎵 白噪音/专注音乐
-- 📅 历史日历查看
-- 🏆 成就徽章系统
-- 📤 数据导出/导入
+**This can be safely ignored because:**
+- ✅ We only use **local notifications**, not remote push
+- ✅ Local notifications work perfectly in Expo Go
+- ✅ This is an Expo Go limitation, not a code issue
+- ✅ When you build with `eas build`, there will be no such error
+
+### Platform Limitations
+- ⚠️ **Expo Go**: Remote push notifications not supported (we only use local notifications, so this is fine)
+- ⚠️ **Web**: Browser notifications require user permission and have limited functionality
+
+### Recommendation for Production
+Use `eas build` instead of Expo Go for production builds:
+```bash
+eas build --platform all
+```
+
+## 🌍 Internationalization
+
+**Supported Languages:**
+- 🇺🇸 **English (en)** - Default, fallback language
+- 🇨🇳 **简体中文 (zh)** - Simplified Chinese
+
+**Features:**
+- Auto-detect system language
+- Manual language switching in Settings
+- All UI text, notifications, and messages are translated
+- Easy to add more languages (just copy and translate language files)
+
+**Adding New Languages:**
+See `.claude/skills/i18n.md` for detailed guide.
+
+## 🔮 Future Plans (V1.2+)
+
+- 📈 7-day/30-day statistics charts
+- 🏷️ Task labels (study, work, reading, etc.)
+- 🎵 White noise / focus music
+- 📅 Historical calendar view
+- 🏆 Achievement badge system
+- 📤 Data export/import
+- 🌏 More languages (Japanese, Korean, Spanish, etc.)
 
 ## 📝 License
 
