@@ -1,6 +1,8 @@
-# 🍅 番茄钟 - Pomodoro Timer
+# 🍅 Pomodoro Timer
 
-简洁、专注、高效。一款优雅的番茄工作法计时器，帮助你提升专注力和工作效率。
+[中文文档](./README.zh.md) | English
+
+A clean, focused, and efficient Pomodoro Technique timer app to help boost your productivity and concentration.
 
 ## ✨ Core Features
 
@@ -21,129 +23,143 @@
 **Completed Features:**
 - ✅ Accurate timer (< 1s error)
 - ✅ State machine (idle → work → break → loop)
-- ✅ Cross-platform data persistence
+- ✅ Cross-platform data persistence (SQLite + IndexedDB)
 - ✅ Three complete pages (timer, stats, settings)
-- ✅ Notification system (local notifications)
-- ✅ Auto control features
+- ✅ Local notification system
+- ✅ Auto control features (auto-start break/work)
 - ✅ Dark mode support
 - ✅ Full internationalization (EN + ZH)
 - ✅ All core bugs fixed
 
 **Testing Status:**
 - ✅ TypeScript compiles successfully
-- ✅ Real device tested
+- ✅ Real device tested (iOS + Android)
 - ✅ Core functionality verified
 - ✅ i18n tested (EN + ZH)
 
-## 📋 文档索引
+## 📋 Documentation
 
-### 产品和设计
-- [PRD.md](./PRD.md) - 产品需求文档
-- [TECH-DESIGN.md](./TECH-DESIGN.md) - 技术架构设计
+### Product & Design
+- [PRD.md](./PRD.md) - Product Requirements Document (Chinese)
+- [TECH-DESIGN.md](./TECH-DESIGN.md) - Technical Architecture (Chinese)
 
-### 开发指南
-- [DEV-CHECKLIST.md](./DEV-CHECKLIST.md) - 开发执行清单
-- [CODE-REUSE-GUIDE.md](./CODE-REUSE-GUIDE.md) - 代码复用指南
-- [TESTING-GUIDE.md](./TESTING-GUIDE.md) - 测试指南
+### Development Guides
+- [DEV-CHECKLIST.md](./DEV-CHECKLIST.md) - Development Checklist (Chinese)
+- [CODE-REUSE-GUIDE.md](./CODE-REUSE-GUIDE.md) - Code Reuse Guide (Chinese)
+- [TESTING-GUIDE.md](./TESTING-GUIDE.md) - Testing Guide (Chinese)
 
-### 项目记录
-- [CHANGELOG.md](./CHANGELOG.md) - 更新日志
-- [MANUAL-STEPS.md](./MANUAL-STEPS.md) - 手动操作步骤
+### Project Records
+- [CHANGELOG.md](./CHANGELOG.md) - Changelog (Chinese)
+- [MANUAL-STEPS.md](./MANUAL-STEPS.md) - Manual Setup Steps (Chinese)
 
-### 配置文件
-- `.claude/mcp.json` - MCP 服务器配置（Context7）
-- `.claude/skills/` - 开发辅助 Skills
+### Configuration
+- `.claude/mcp.json` - MCP Server Configuration (Context7)
+- `.claude/skills/` - Development Assistant Skills
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 安装依赖
+### Install Dependencies
 ```bash
 npm install
 ```
 
-### 运行应用
+### Run the App
 ```bash
-# 启动开发服务器
+# Start development server
 npx expo start
 
-# 在 iOS 模拟器运行
+# Run on iOS simulator
 npx expo start --ios
 
-# 在 Android 模拟器运行
+# Run on Android emulator
 npx expo start --android
 
-# 在浏览器运行
+# Run in browser
 npx expo start --web
 ```
 
-### 测试建议
-详见 [TESTING-GUIDE.md](./TESTING-GUIDE.md)
+### Testing
+See [TESTING-GUIDE.md](./TESTING-GUIDE.md) for detailed testing scenarios.
 
-## 🛠️ 技术栈
+Quick test:
+```bash
+# Type checking
+npx tsc --noEmit
 
-- Expo SDK 54
-- React Native 0.81
-- TypeScript（100% 类型安全）
-- Zustand（状态管理）
-- SQLite/IndexedDB（本地存储）
-- Reanimated（动画）
+# Run the app
+npx expo start
+```
 
-## 📊 项目架构
+## 🛠️ Tech Stack
+
+- **Framework:** Expo SDK 54 + React Native 0.81
+- **Language:** TypeScript (100% type-safe)
+- **State Management:** Zustand
+- **Database:** SQLite (mobile) / IndexedDB (web)
+- **Animations:** React Native Reanimated
+- **i18n:** i18next + react-i18next + expo-localization
+- **Date Utils:** date-fns
+
+## 📊 Project Architecture
 
 ```
 app/
   (tabs)/
-    index.tsx      # 计时器主页
-    stats.tsx      # 统计页面
-    settings.tsx   # 设置页面
-  _layout.tsx      # 根布局
+    index.tsx      # Timer page
+    stats.tsx      # Statistics page
+    settings.tsx   # Settings page
+  _layout.tsx      # Root layout
 
 components/
-  CircularTimer.tsx  # 圆形倒计时器组件
+  CircularTimer.tsx  # Circular countdown timer
 
 lib/
-  storage/         # 跨平台存储层
-    types.ts       # 接口定义
-    mobile.ts      # SQLite 实现
-    web.ts         # IndexedDB 实现
-    index.ts       # 平台选择器
-  db.ts            # 数据库初始化
-  notifications.ts # 通知管理
-  timer.ts         # 计时器核心逻辑
+  storage/         # Cross-platform storage layer
+    types.ts       # Interface definitions
+    mobile.ts      # SQLite implementation
+    web.ts         # IndexedDB implementation
+    index.ts       # Platform selector
+  db.ts            # Database initialization
+  notifications.ts # Notification management
+  timer.ts         # Timer core logic
 
 store/
-  usePomodoroStore.ts  # 全局状态管理（Zustand）
+  usePomodoroStore.ts  # Global state (Zustand)
 
 types/
-  models.ts        # 数据模型定义
+  models.ts        # Data models
+
+locales/
+  en/              # English translations
+  zh/              # Chinese translations
+  index.ts         # i18n configuration
 
 constants/
-  Colors.ts        # 主题颜色配置
+  Colors.ts        # Theme colors
 
 hooks/
-  useThemeColors.ts  # 主题 Hook
+  useThemeColors.ts  # Theme hook
 ```
 
-## 🧪 测试
+## 🧪 Testing
 
-详见 [TESTING-GUIDE.md](./TESTING-GUIDE.md)
+See [TESTING-GUIDE.md](./TESTING-GUIDE.md) for comprehensive testing guide.
 
-### 快速测试
+### Quick Test
+1. Shorten durations in Settings (e.g., 1 minute work)
+2. Enable auto-start features
+3. Complete 4 pomodoros to verify the cycle:
+   - Pomodoros 1-3: Short breaks
+   - Pomodoro 4: Long break
+   - Pomodoro 5: Short break (cycle restarts)
+
+## 📦 Build & Deploy
+
 ```bash
-# 编译检查
-npx tsc --noEmit
-
-# 运行应用
-npx expo start
-```
-
-## 📦 构建和发布
-
-```bash
-# 构建 iOS 和 Android
+# Build for iOS and Android
 eas build --platform all
 
-# 提交到商店
+# Submit to stores
 eas submit
 ```
 
@@ -164,8 +180,8 @@ functionality provided by expo-notifications was removed from Expo Go
 - ✅ When you build with `eas build`, there will be no such error
 
 ### Platform Limitations
-- ⚠️ **Expo Go**: Remote push notifications not supported (we only use local notifications, so this is fine)
-- ⚠️ **Web**: Browser notifications require user permission and have limited functionality
+- ⚠️ **Expo Go**: Remote push not supported (local notifications work fine)
+- ⚠️ **Web**: Browser notifications require user permission
 
 ### Recommendation for Production
 Use `eas build` instead of Expo Go for production builds:
@@ -183,7 +199,7 @@ eas build --platform all
 - Auto-detect system language
 - Manual language switching in Settings
 - All UI text, notifications, and messages are translated
-- Easy to add more languages (just copy and translate language files)
+- Easy to add more languages
 
 **Adding New Languages:**
 See `.claude/skills/i18n.md` for detailed guide.
@@ -204,4 +220,4 @@ MIT
 
 ---
 
-**简洁、专注、高效 - 番茄工作法！** 🍅
+**Simple, Focused, Efficient - The Pomodoro Way!** 🍅
