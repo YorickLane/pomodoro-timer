@@ -47,6 +47,7 @@ A clean, focused, and efficient Pomodoro Technique timer app to help boost your 
 - [DEV-CHECKLIST.md](./DEV-CHECKLIST.md) - Development Checklist (Chinese)
 - [CODE-REUSE-GUIDE.md](./CODE-REUSE-GUIDE.md) - Code Reuse Guide (Chinese)
 - [TESTING-GUIDE.md](./TESTING-GUIDE.md) - Testing Guide (Chinese)
+- [BUILD-AND-RELEASE.md](./BUILD-AND-RELEASE.md) - **Build & Release Guide (EN + ZH)** 🚀
 
 ### Project Records
 - [CHANGELOG.md](./CHANGELOG.md) - Changelog (Chinese)

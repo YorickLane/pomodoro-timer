@@ -47,6 +47,7 @@
 - [DEV-CHECKLIST.md](./DEV-CHECKLIST.md) - 开发执行清单
 - [CODE-REUSE-GUIDE.md](./CODE-REUSE-GUIDE.md) - 代码复用指南
 - [TESTING-GUIDE.md](./TESTING-GUIDE.md) - 测试指南
+- [BUILD-AND-RELEASE.md](./BUILD-AND-RELEASE.md) - **构建和发布指南（中英双语）** 🚀
 
 ### 项目记录
 - [CHANGELOG.md](./CHANGELOG.md) - 更新日志
