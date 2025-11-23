@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } f
 import { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import i18n from '@/locales';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { usePomodoroStore } from '@/store/usePomodoroStore';
 import {
@@ -11,7 +10,7 @@ import {
 } from '@/lib/notifications';
 
 export default function SettingsScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation(); // 使用响应式的 i18n
   const { colors } = useThemeColors();
   const { settings, updateSetting, initialize } = usePomodoroStore();
 
