@@ -45,7 +45,7 @@ interface PomodoroState {
   reset: () => void;
 
   // Actions - 会话记录
-  completeSession: (type: 'work' | 'short_break' | 'long_break', completed: boolean) => Promise<void>;
+  completeSession: (type: 'work' | 'short_break' | 'long_break', completed: boolean, durationMinutes?: number) => Promise<void>;
   deleteSession: (id: string) => Promise<void>;
 }
 
@@ -55,8 +55,9 @@ const timer = new PomodoroTimer();
 export const usePomodoroStore = create<PomodoroState>((set, get) => {
   // 订阅计时器状态变化
   timer.subscribe((timerState) => {
-    // 保存之前的状态，用于判断计时结束时是工作还是休息
+    // 保存之前的状态和时长，用于计时结束时的处理
     const previousStatus = get().timerStatus;
+    const previousTotalSeconds = get().totalSeconds;
 
     set({
       timerStatus: timerState.status,
@@ -65,13 +66,14 @@ export const usePomodoroStore = create<PomodoroState>((set, get) => {
     });
 
     // 计时结束时的处理
-    if (timerState.remainingSeconds === 0 && timerState.status === 'idle') {
+    if (timerState.remainingSeconds === 0 && timerState.status === 'idle' && previousTotalSeconds > 0) {
       const state = get();
       const wasWorking = previousStatus === 'working';
+      const sessionDuration = Math.floor(previousTotalSeconds / 60);
 
       if (wasWorking) {
-        // 工作结束，异步保存工作会话
-        get().completeSession('work', true).then(() => {
+        // 工作结束，异步保存工作会话（传入保存的时长）
+        get().completeSession('work', true, sessionDuration).then(() => {
           // 发送通知
           if (state.settings?.notification_enabled) {
             notifyWorkComplete(state.settings.sound_enabled);
@@ -97,9 +99,9 @@ export const usePomodoroStore = create<PomodoroState>((set, get) => {
         const isShortBreak = previousStatus === 'short_break';
 
         if (isLongBreak || isShortBreak) {
-          // 保存休息会话
+          // 保存休息会话（传入保存的时长）
           const breakType = isLongBreak ? 'long_break' : 'short_break';
-          get().completeSession(breakType, true).then(() => {
+          get().completeSession(breakType, true, sessionDuration).then(() => {
             // 发送通知
             if (state.settings?.notification_enabled) {
               if (isLongBreak) {
@@ -223,12 +225,10 @@ export const usePomodoroStore = create<PomodoroState>((set, get) => {
     },
 
     // 完成会话
-    completeSession: async (type: 'work' | 'short_break' | 'long_break', completed: boolean) => {
+    completeSession: async (type: 'work' | 'short_break' | 'long_break', completed: boolean, durationMinutes?: number) => {
       try {
-        const state = get();
-
-        // 计算实际时长（分钟）
-        const duration = Math.floor(state.totalSeconds / 60);
+        // 使用传入的时长，如果没有传入则从当前状态获取
+        const duration = durationMinutes || Math.floor(get().totalSeconds / 60);
         const planned = duration; // 计划时长等于总时长
 
         await storageAdapter.addSession(type, duration, planned, completed);
