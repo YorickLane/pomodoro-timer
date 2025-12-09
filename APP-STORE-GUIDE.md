@@ -2,6 +2,10 @@
 
 [中文](#中文版本) | [English](#english-version)
 
+> 最后更新：2025年12月
+>
+> 信息来源：[Apple Developer](https://developer.apple.com/programs/)、[Google Play Console](https://support.google.com/googleplay/android-developer/)
+
 ---
 
 ## 中文版本
@@ -16,12 +20,14 @@
 
 **费用：** $99 美元/年
 
+**官方链接：** https://developer.apple.com/programs/enroll/
+
 **注册步骤：**
 
 1. **准备材料**
-   - Apple ID（建议使用专门的开发者账号）
+   - Apple ID（建议使用专门的开发者账号，需开启双重认证）
    - 有效的信用卡或借记卡
-   - 身份证明文件（护照或身份证）
+   - 法定姓名（Apple Account 中的姓名必须是真实姓名，不能使用别名或公司名）
    - 如果是公司账号：D-U-N-S 编号
 
 2. **注册流程**
@@ -31,21 +37,33 @@
    3. 使用 Apple ID 登录
    4. 选择账号类型：
       - Individual（个人）- 适合独立开发者
-      - Organization（组织）- 适合公司/团队
+      - Organization（组织）- 需要 D-U-N-S 编号
    5. 填写个人/公司信息
    6. 同意协议并支付年费
-   7. 等待审核（通常 24-48 小时）
+   7. 等待审核
    ```
 
-3. **审核通过后**
+3. **审核时间**
+   - 个人账号：通常 24-48 小时
+   - 组织账号：3-5 个工作日
+   - 如需 D-U-N-S 编号或额外验证：7-10 天
+
+4. **审核通过后**
    - 登录 App Store Connect: https://appstoreconnect.apple.com/
    - 创建 App ID 和证书
    - 配置 EAS 提交凭证
 
+**会员权益：**
+- App Store 发布权限
+- TestFlight 内测分发
+- 每月 25 小时 Xcode Cloud 计算时间
+- 每个应用最高 1PB iCloud 存储
+
 **注意事项：**
-- 个人账号：应用显示你的真实姓名
-- 公司账号：需要 D-U-N-S 编号，审核时间更长
+- 个人账号：应用显示你的真实姓名作为卖家名称
+- 组织账号：需要 D-U-N-S 编号，必须有法律授权代表签约
 - 年费到期需续费，否则应用将下架
+- 可申请费用减免（非营利组织、教育机构、政府机构）
 
 ---
 
@@ -53,12 +71,16 @@
 
 **费用：** $25 美元（一次性）
 
+**官方链接：** https://play.google.com/console/signup
+
 **注册步骤：**
 
 1. **准备材料**
    - Google 账号
-   - 有效的信用卡或借记卡
-   - 身份证明（部分情况需要）
+   - 有效的信用卡或借记卡（不接受预付卡）
+   - 政府签发的身份证明文件
+   - 联系电话和邮箱
+   - 如果是组织账号：D-U-N-S 编号
 
 2. **注册流程**
    ```
@@ -70,10 +92,28 @@
    4. 填写开发者信息
    5. 同意开发者协议
    6. 支付 $25 注册费
-   7. 完成身份验证（如果需要）
+   7. 完成身份验证
    ```
 
-3. **注册完成后**
+3. **身份验证要求（2024年起强制）**
+
+   **个人账号需要提供：**
+   - 政府签发的身份证明
+   - 联系电话（供 Google 联系）
+   - 开发者邮箱（供用户联系）
+   - Android 设备验证（通过 Play Console 移动应用）
+
+   **组织账号需要提供：**
+   - 组织法定名称和地址
+   - D-U-N-S 编号（9位唯一标识）
+   - 组织验证文件
+   - 联系电话和邮箱
+
+4. **处理时间**
+   - 注册处理：最多 5 天
+   - 首次发布应用审核可能更长
+
+5. **注册完成后**
    - 登录 Google Play Console: https://play.google.com/console/
    - 创建应用
    - 配置服务账号（用于自动提交）
@@ -84,12 +124,12 @@
 # 1. 在 Google Cloud Console 创建服务账号
 #    https://console.cloud.google.com/
 
-# 2. 下载服务账号 JSON 密钥文件
+# 2. 创建 JSON 密钥文件并下载
 
 # 3. 在 Google Play Console 中授权服务账号
-#    设置 → API 访问 → 添加服务账号
+#    设置 → API 访问 → 关联项目 → 添加服务账号
 
-# 4. 将密钥文件放在项目目录
+# 4. 将密钥文件放在项目目录（添加到 .gitignore）
 #    例如：./google-service-account.json
 
 # 5. 在 eas.json 中配置
@@ -98,16 +138,24 @@
 }
 ```
 
+**服务费用（付费应用/内购）：**
+- 前 $100万/年：15% 服务费
+- 超过 $100万：30% 服务费
+- 订阅类应用：首日起 15%
+
 **注意事项：**
 - 注册费一次性，终身有效
-- 首次发布应用需要更长审核时间
-- 需要完成开发者验证（2024年新要求）
+- 2024年起所有开发者必须完成身份验证
+- 未完成验证的账号和应用可能被移除
+- 2026年起将要求所有 Android 应用开发者验证身份（包括非 Play 商店分发）
 
 ---
 
 ### 1.3 Expo 账号（EAS Build/Submit 必需）
 
 **费用：** 免费（付费计划可选）
+
+**官方链接：** https://expo.dev/signup
 
 **注册步骤：**
 
@@ -126,7 +174,7 @@ eas login
 - 队列优先级较低
 
 **付费计划（可选）：**
-- Production: $99/月 - 无限构建
+- Production: $99/月 - 无限构建，优先队列
 - Enterprise: 联系销售
 
 ---
@@ -135,12 +183,15 @@ eas login
 
 ### 2.1 应用图标
 
-**规格要求：**
+| 平台 | 尺寸 | 格式 | 最大文件大小 | 说明 |
+|------|------|------|-------------|------|
+| iOS | 1024x1024 | PNG | - | 不能有透明度、不能有圆角（系统自动处理） |
+| Android | 512x512 | PNG (32位，带 alpha) | 1024 KB | 提供完整正方形，系统自动应用圆角遮罩 |
 
-| 平台 | 尺寸 | 格式 | 说明 |
-|------|------|------|------|
-| iOS | 1024x1024 | PNG | 不能有透明度、圆角 |
-| Android | 512x512 | PNG | 可以有透明度 |
+**Android 图标设计规范：**
+- 不要在图标中包含排名、价格、分类等误导性徽章或文字
+- 图标应是启动器图标的高保真版本
+- 可以有透明区域用于阴影等效果
 
 **生成图标：**
 ```bash
@@ -156,37 +207,66 @@ node scripts/generate-icons.js
 
 ### 2.2 应用截图
 
-**iOS 截图尺寸（必需）：**
+#### iOS 截图尺寸（2024年9月更新）
 
-| 设备 | 尺寸（像素） | 说明 |
-|------|-------------|------|
-| 6.7" (iPhone 15 Pro Max) | 1290 x 2796 | 必需 |
-| 6.5" (iPhone 14 Plus) | 1284 x 2778 | 必需 |
-| 5.5" (iPhone 8 Plus) | 1242 x 2208 | 可选 |
-| iPad Pro 12.9" | 2048 x 2732 | 如果支持 iPad |
+> **重要变化：** Apple 简化了截图要求，现在只需提供一个主要尺寸，其他尺寸会自动缩放。
 
-**Android 截图尺寸：**
+| 设备 | 屏幕尺寸 | 像素（竖屏） | 像素（横屏） | 状态 |
+|------|---------|-------------|-------------|------|
+| iPhone 16 Pro Max, 15 Pro Max, 15 Plus 等 | 6.9" | 1320 x 2868 | 2868 x 1320 | **必需**（或提供 6.5"） |
+| iPhone 14 Plus, 13 Pro Max, 12 Pro Max 等 | 6.5" | 1284 x 2778 | 2778 x 1284 | 如未提供 6.9" 则必需 |
+| iPhone 16 Pro, 16, 15 Pro, 15, 14 Pro | 6.3" | 1179 x 2556 | 2556 x 1179 | 可选（自动从 6.5" 缩放） |
+| iPhone 14, 13 Pro, 13, 12 Pro, 12 等 | 6.1" | 1170 x 2532 | 2532 x 1170 | 可选（自动从 6.5" 缩放） |
+| iPhone 8 Plus, 7 Plus, 6S Plus | 5.5" | 1242 x 2208 | 2208 x 1242 | 可选（自动从 6.1" 缩放） |
 
-| 类型 | 尺寸 | 说明 |
-|------|------|------|
-| 手机 | 至少 320px，最大 3840px | 至少 2 张 |
-| 平板 7" | 至少 320px | 可选 |
-| 平板 10" | 至少 320px | 可选 |
+**iOS 截图要求：**
+- 格式：.jpeg、.jpg 或 .png
+- 数量：1-10 张
+- 分辨率：72 dpi，RGB，无透明度
+- **建议：提供 6.9" 尺寸截图，其他尺寸自动生成**
+
+#### Android 截图尺寸
+
+| 类型 | 尺寸要求 | 数量 | 说明 |
+|------|---------|------|------|
+| 手机 | 最小 1080px 宽，9:16 或 16:9 | 2-8 张 | **必需** |
+| 7" 平板 | 最小 1200 x 1920 (竖屏) | 最多 8 张 | 可选 |
+| 10" 平板 | 最小 1600 x 2560 (竖屏) | 最多 8 张 | 可选 |
+| Wear OS | 384 x 384 (1:1) | 至少 1 张 | 仅手表应用需要 |
+
+**Android 截图要求：**
+- 格式：JPEG 或 24位 PNG（无 alpha）
+- 最大文件大小：8 MB/张
+- 长边不能超过短边的 2 倍
+- 截图应展示真实 UI，不要使用误导性视觉效果
+- 文字不应超过截图面积的 20%
+- 避免使用"最佳"、"第一"、"新"、"免费"等促销词汇
 
 **截图最佳实践：**
 - 展示核心功能（计时器、统计、设置）
 - 使用真实数据，不要空白页面
-- 考虑添加文字说明（可选）
 - 保持风格一致
-
-**截图工具推荐：**
-- Simulator（iOS 模拟器自带截图）
-- Android Studio Emulator
-- 截图美化：https://screenshots.pro/
+- 反映应用最新状态
 
 ---
 
-### 2.3 应用描述
+### 2.3 功能图片（Google Play 必需）
+
+| 规格 | 值 |
+|------|-----|
+| 尺寸 | 1024 x 500 像素 |
+| 格式 | JPEG 或 24位 PNG（无 alpha） |
+| 最大文件大小 | 1 MB |
+
+**设计要点：**
+- 避免在边缘放置重要元素（会被裁切）
+- 不要重复使用应用图标的品牌元素
+- 不要包含排名、奖项、用户评价、价格等信息
+- 用作视频预览的封面和广告
+
+---
+
+### 2.4 应用描述
 
 **App Store（iOS）：**
 
@@ -194,7 +274,7 @@ node scripts/generate-icons.js
 |------|------|------|
 | 应用名称 | 30 字符 | 简洁有力 |
 | 副标题 | 30 字符 | 补充说明 |
-| 关键词 | 100 字符 | 逗号分隔 |
+| 关键词 | 100 字符 | 逗号分隔，用于搜索 |
 | 描述 | 4000 字符 | 详细功能介绍 |
 | 更新说明 | 4000 字符 | 版本更新内容 |
 
@@ -259,7 +339,7 @@ Simple. Focused. Efficient.
 
 ---
 
-### 2.4 隐私政策
+### 2.5 隐私政策
 
 **为什么需要：**
 - App Store 和 Google Play 都要求提供隐私政策 URL
@@ -276,14 +356,14 @@ Simple. Focused. Efficient.
 **托管方式：**
 - GitHub Pages（免费）
 - 自己的网站
-- 第三方服务（如 Termly、iubenda）
+- 第三方服务：[Termly](https://termly.io/)、[iubenda](https://www.iubenda.com/)
 
 **示例隐私政策模板：**
 
 ```markdown
 # 隐私政策 / Privacy Policy
 
-最后更新：2024年1月1日
+最后更新：2025年1月1日
 
 ## 数据收集
 
@@ -305,11 +385,7 @@ Simple. Focused. Efficient.
 
 ---
 
-### 2.5 其他材料
-
-**功能图片（Google Play）：**
-- 尺寸：1024 x 500 像素
-- 用于商店展示顶部
+### 2.6 其他材料
 
 **视频预览（可选）：**
 - iOS：15-30 秒，展示核心功能
@@ -364,7 +440,7 @@ eas submit --platform ios --latest
    - 上传截图（按尺寸分组）
    - 填写描述和关键词
    - 选择构建版本
-   - 版权信息（© 2024 Your Name）
+   - 版权信息（© 2025 Your Name）
    - 年龄分级：4+
 
 5. **App 隐私**
@@ -407,7 +483,7 @@ eas submit --platform android --latest
      - 详细描述（4000 字符）
    - **图形素材**
      - 应用图标（512x512）
-     - 功能图片（1024x500）
+     - 功能图片（1024x500）**必需**
      - 手机截图（至少 2 张）
 
 3. **应用内容**
@@ -417,7 +493,6 @@ eas submit --platform android --latest
    - **内容分级**：填写问卷，获得"所有人"分级
    - **目标受众**：选择年龄组
    - **新闻应用**：选择"否"
-   - **新冠相关应用**：选择"否"
    - **数据安全**：填写数据收集声明
 
 4. **发布设置**
@@ -449,10 +524,7 @@ eas submit --platform android --latest
 | 元数据问题 | 检查截图、描述是否符合规范 |
 | 最低功能要求 | 确保应用有足够的功能和价值 |
 
-**申诉流程：**
-1. 收到拒绝通知后，查看详细原因
-2. 在 App Store Connect 中回复审核团队
-3. 解决问题后重新提交
+**审核指南：** https://developer.apple.com/app-store/review/guidelines/
 
 ---
 
@@ -468,7 +540,9 @@ eas submit --platform android --latest
 | 权限说明不清楚 | 在描述中说明为什么需要某些权限 |
 | 内容分级不正确 | 重新填写分级问卷 |
 | 数据安全声明不完整 | 完善数据收集声明 |
-| 违反政策 | 检查是否有违规内容或行为 |
+| 截图包含误导性内容 | 使用真实 UI 截图 |
+
+**政策中心：** https://play.google.com/console/about/guides/
 
 ---
 
@@ -519,41 +593,25 @@ eas submit --platform all --latest
 # 6. 提交审核
 ```
 
-**更新说明示例：**
-
-```
-版本 1.1.0 更新内容：
-
-新功能：
-• 添加每日目标设置
-• 新增周统计视图
-
-改进：
-• 优化计时器精度
-• 改进深色模式显示
-
-修复：
-• 修复通知偶尔不显示的问题
-• 修复统计数据不准确的问题
-```
-
 ---
 
 ## 6️⃣ 上架检查清单
 
 ### 账号准备
-- [ ] Apple Developer Program 已注册并激活
-- [ ] Google Play Console 已注册并验证
+- [ ] Apple Developer Program 已注册并激活（$99/年）
+- [ ] Google Play Console 已注册并完成身份验证（$25 一次性）
 - [ ] Expo 账号已登录
 
 ### 商店材料
-- [ ] 应用图标（1024x1024 PNG）
-- [ ] iPhone 截图（6.7" 和 6.5" 至少各 2 张）
-- [ ] Android 截图（至少 2 张）
-- [ ] 应用名称（中英文）
-- [ ] 简短描述（80 字符）
-- [ ] 详细描述（中英文）
-- [ ] 关键词（100 字符）
+- [ ] 应用图标 - iOS: 1024x1024 PNG（无透明）
+- [ ] 应用图标 - Android: 512x512 PNG（带 alpha，<1MB）
+- [ ] 功能图片 - Android: 1024x500（必需）
+- [ ] iPhone 截图 - 6.9" 或 6.5"（至少 2 张）
+- [ ] Android 截图 - 最小 1080px 宽（至少 2 张）
+- [ ] 应用名称（中英文，≤30 字符）
+- [ ] 简短描述（≤80 字符）
+- [ ] 详细描述（≤4000 字符）
+- [ ] 关键词（≤100 字符，逗号分隔）
 - [ ] 隐私政策 URL 可访问
 - [ ] 支持邮箱/网站
 
@@ -577,26 +635,33 @@ eas submit --platform all --latest
 ## 有用资源
 
 ### 官方文档
-- App Store 审核指南: https://developer.apple.com/app-store/review/guidelines/
-- Google Play 政策中心: https://play.google.com/console/about/guides/
-- EAS Submit: https://docs.expo.dev/submit/introduction/
+- [App Store 审核指南](https://developer.apple.com/app-store/review/guidelines/)
+- [App Store Connect 截图规格](https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications/)
+- [Google Play 政策中心](https://play.google.com/console/about/guides/)
+- [Google Play 图标设计规范](https://developer.android.com/distribute/google-play/resources/icon-design-specifications)
+- [Google Play 预览素材](https://support.google.com/googleplay/android-developer/answer/9866151)
+- [EAS Submit](https://docs.expo.dev/submit/introduction/)
 
 ### 工具链接
-- App Store Connect: https://appstoreconnect.apple.com/
-- Google Play Console: https://play.google.com/console/
-- Apple Developer: https://developer.apple.com/
-- Google Cloud Console: https://console.cloud.google.com/
+- [App Store Connect](https://appstoreconnect.apple.com/)
+- [Google Play Console](https://play.google.com/console/)
+- [Apple Developer](https://developer.apple.com/)
+- [Google Cloud Console](https://console.cloud.google.com/)
 
 ### 隐私政策生成器
-- Termly: https://termly.io/
-- iubenda: https://www.iubenda.com/
-- PrivacyPolicies.com: https://www.privacypolicies.com/
+- [Termly](https://termly.io/)
+- [iubenda](https://www.iubenda.com/)
+- [PrivacyPolicies.com](https://www.privacypolicies.com/)
 
 ---
 
 # English Version
 
 > **Build process** - see: [BUILD-AND-RELEASE.md](./BUILD-AND-RELEASE.md)
+>
+> Last updated: December 2025
+>
+> Sources: [Apple Developer](https://developer.apple.com/programs/), [Google Play Console](https://support.google.com/googleplay/android-developer/)
 
 ---
 
@@ -606,12 +671,14 @@ eas submit --platform all --latest
 
 **Cost:** $99 USD/year
 
+**Official Link:** https://developer.apple.com/programs/enroll/
+
 **Registration Steps:**
 
 1. **Prepare Materials**
-   - Apple ID (recommend dedicated developer account)
+   - Apple ID (with two-factor authentication enabled)
    - Valid credit/debit card
-   - Identity documents (passport or ID)
+   - Legal name (must match Apple Account, no aliases or company names)
    - For organizations: D-U-N-S number
 
 2. **Registration Process**
@@ -621,16 +688,27 @@ eas submit --platform all --latest
    3. Sign in with Apple ID
    4. Choose account type:
       - Individual - for independent developers
-      - Organization - for companies/teams
+      - Organization - requires D-U-N-S number
    5. Fill in personal/company information
    6. Agree to terms and pay annual fee
-   7. Wait for approval (usually 24-48 hours)
+   7. Wait for approval
    ```
 
-3. **After Approval**
+3. **Approval Time**
+   - Individual accounts: Usually 24-48 hours
+   - Organization accounts: 3-5 business days
+   - If D-U-N-S number or additional verification needed: 7-10 days
+
+4. **After Approval**
    - Login to App Store Connect: https://appstoreconnect.apple.com/
    - Create App ID and certificates
    - Configure EAS submission credentials
+
+**Membership Benefits:**
+- App Store publishing rights
+- TestFlight beta distribution
+- 25 compute hours/month for Xcode Cloud
+- Up to 1PB iCloud storage per app
 
 ---
 
@@ -638,50 +716,45 @@ eas submit --platform all --latest
 
 **Cost:** $25 USD (one-time)
 
+**Official Link:** https://play.google.com/console/signup
+
 **Registration Steps:**
 
 1. **Prepare Materials**
    - Google account
-   - Valid credit/debit card
-   - Identity verification (in some cases)
+   - Valid credit/debit card (prepaid cards not accepted)
+   - Government-issued ID
+   - Contact phone and email
+   - For organizations: D-U-N-S number
 
-2. **Registration Process**
-   ```
-   1. Visit https://play.google.com/console/signup
-   2. Sign in with Google account
-   3. Choose account type:
-      - Personal developer
-      - Organization/Company
-   4. Fill in developer information
-   5. Agree to developer agreement
-   6. Pay $25 registration fee
-   7. Complete identity verification (if required)
-   ```
+2. **Identity Verification Requirements (Mandatory since 2024)**
 
-3. **After Registration**
-   - Login to Google Play Console
-   - Create app
-   - Configure service account (for automated submission)
+   **Personal accounts require:**
+   - Government-issued ID
+   - Contact phone (for Google to contact you)
+   - Developer email (for users to contact you)
+   - Android device verification (via Play Console mobile app)
 
-**Configure Service Account (for EAS Submit):**
+   **Organization accounts require:**
+   - Organization's legal name and address
+   - D-U-N-S number (9-digit unique ID)
+   - Organization verification documents
+   - Contact phone and email
 
-```bash
-# 1. Create service account in Google Cloud Console
-#    https://console.cloud.google.com/
+3. **Processing Time**
+   - Registration processing: Up to 5 days
+   - First app review may take longer
 
-# 2. Download service account JSON key file
+**Service Fees (For Paid Apps):**
+- First $1M/year: 15% service fee
+- Above $1M: 30% service fee
+- Subscriptions: 15% from day one
 
-# 3. Grant service account access in Google Play Console
-#    Settings → API access → Add service account
-
-# 4. Place key file in project directory
-#    e.g., ./google-service-account.json
-
-# 5. Configure in eas.json
-"android": {
-  "serviceAccountKeyPath": "./google-service-account.json"
-}
-```
+**Important Notes:**
+- Registration fee is one-time, lifetime valid
+- All developers must complete identity verification since 2024
+- Unverified accounts and apps may be removed
+- Starting 2026, all Android app developers will require identity verification
 
 ---
 
@@ -689,17 +762,19 @@ eas submit --platform all --latest
 
 **Cost:** Free (paid plans available)
 
-**Registration:**
+**Official Link:** https://expo.dev/signup
 
 ```bash
-# 1. Visit https://expo.dev/signup to register
-
-# 2. Or register via CLI
+# Register
 npx expo register
 
-# 3. Login
+# Login
 eas login
 ```
+
+**Free Plan Limits:**
+- 30 builds per month
+- Lower queue priority
 
 ---
 
@@ -707,30 +782,59 @@ eas login
 
 ### 2.1 App Icon
 
-| Platform | Size | Format | Notes |
-|----------|------|--------|-------|
-| iOS | 1024x1024 | PNG | No transparency, no rounded corners |
-| Android | 512x512 | PNG | Transparency allowed |
+| Platform | Size | Format | Max File Size | Notes |
+|----------|------|--------|--------------|-------|
+| iOS | 1024x1024 | PNG | - | No transparency, no rounded corners |
+| Android | 512x512 | PNG (32-bit with alpha) | 1024 KB | Full square, system applies mask |
 
 ---
 
 ### 2.2 Screenshots
 
-**iOS Screenshot Sizes (Required):**
+#### iOS Screenshot Sizes (Updated September 2024)
 
-| Device | Size (pixels) | Required |
-|--------|--------------|----------|
-| 6.7" (iPhone 15 Pro Max) | 1290 x 2796 | Yes |
-| 6.5" (iPhone 14 Plus) | 1284 x 2778 | Yes |
-| 5.5" (iPhone 8 Plus) | 1242 x 2208 | Optional |
+> **Important Change:** Apple simplified requirements. Only one primary size needed, others auto-scale.
 
-**Android Screenshots:**
-- Phone: At least 2, min 320px, max 3840px
-- Tablet: Optional
+| Device | Screen Size | Portrait (px) | Landscape (px) | Status |
+|--------|------------|--------------|----------------|--------|
+| iPhone 16 Pro Max, 15 Pro Max, etc. | 6.9" | 1320 x 2868 | 2868 x 1320 | **Required** (or provide 6.5") |
+| iPhone 14 Plus, 13 Pro Max, etc. | 6.5" | 1284 x 2778 | 2778 x 1284 | Required if 6.9" not provided |
+| iPhone 16 Pro, 16, 15 Pro, etc. | 6.3" | 1179 x 2556 | 2556 x 1179 | Optional (auto-scales) |
+| iPhone 14, 13 Pro, 13, etc. | 6.1" | 1170 x 2532 | 2532 x 1170 | Optional (auto-scales) |
+
+**iOS Requirements:**
+- Format: .jpeg, .jpg, or .png
+- Quantity: 1-10 screenshots
+- Resolution: 72 dpi, RGB, no transparency
+- **Recommendation: Provide 6.9" screenshots, others auto-generate**
+
+#### Android Screenshot Sizes
+
+| Type | Size Requirements | Quantity | Notes |
+|------|-------------------|----------|-------|
+| Phone | Min 1080px width, 9:16 or 16:9 | 2-8 | **Required** |
+| 7" Tablet | Min 1200 x 1920 (portrait) | Up to 8 | Optional |
+| 10" Tablet | Min 1600 x 2560 (portrait) | Up to 8 | Optional |
+
+**Android Requirements:**
+- Format: JPEG or 24-bit PNG (no alpha)
+- Max file size: 8 MB per screenshot
+- Text should not exceed 20% of screenshot area
+- Avoid promotional phrases like "Best," "New," "Free"
 
 ---
 
-### 2.3 App Description
+### 2.3 Feature Graphic (Required for Google Play)
+
+| Specification | Value |
+|---------------|-------|
+| Size | 1024 x 500 pixels |
+| Format | JPEG or 24-bit PNG (no alpha) |
+| Max File Size | 1 MB |
+
+---
+
+### 2.4 App Description
 
 **App Store (iOS):**
 
@@ -751,7 +855,7 @@ eas login
 
 ---
 
-### 2.4 Privacy Policy
+### 2.5 Privacy Policy
 
 **Why Required:**
 - Both App Store and Google Play require privacy policy URL
@@ -760,7 +864,7 @@ eas login
 **Hosting Options:**
 - GitHub Pages (free)
 - Your own website
-- Third-party services (Termly, iubenda)
+- Third-party services: [Termly](https://termly.io/), [iubenda](https://www.iubenda.com/)
 
 ---
 
@@ -800,7 +904,7 @@ eas submit --platform android --latest
 **In Google Play Console:**
 1. Create app
 2. Complete store listing
-3. Upload screenshots
+3. Upload feature graphic (required) and screenshots
 4. Fill content rating questionnaire
 5. Complete data safety section
 6. Upload AAB and submit
@@ -820,6 +924,8 @@ eas submit --platform android --latest
 - Private API usage
 - Metadata issues
 
+**Review Guidelines:** https://developer.apple.com/app-store/review/guidelines/
+
 ---
 
 ### 4.2 Google Play Review
@@ -831,6 +937,9 @@ eas submit --platform android --latest
 - Unclear permission usage
 - Incorrect content rating
 - Incomplete data safety declaration
+- Misleading screenshots
+
+**Policy Center:** https://play.google.com/console/about/guides/
 
 ---
 
@@ -845,7 +954,7 @@ eas submit --platform android --latest
 
 **Google Play:**
 - Immediate release
-- Staged rollout (recommended)
+- Staged rollout (recommended): Start with 20%, gradually increase to 100%
 
 ---
 
@@ -882,18 +991,20 @@ eas submit --platform all --latest
 ## 6️⃣ Pre-Launch Checklist
 
 ### Account Setup
-- [ ] Apple Developer Program registered and active
-- [ ] Google Play Console registered and verified
+- [ ] Apple Developer Program registered and active ($99/year)
+- [ ] Google Play Console registered with identity verification ($25 one-time)
 - [ ] Expo account logged in
 
 ### Store Assets
-- [ ] App icon (1024x1024 PNG)
-- [ ] iPhone screenshots (6.7" and 6.5", at least 2 each)
-- [ ] Android screenshots (at least 2)
-- [ ] App name
-- [ ] Short description (80 chars)
-- [ ] Full description
-- [ ] Keywords (100 chars)
+- [ ] App icon - iOS: 1024x1024 PNG (no transparency)
+- [ ] App icon - Android: 512x512 PNG (with alpha, <1MB)
+- [ ] Feature graphic - Android: 1024x500 (required)
+- [ ] iPhone screenshots - 6.9" or 6.5" (at least 2)
+- [ ] Android screenshots - min 1080px wide (at least 2)
+- [ ] App name (≤30 chars)
+- [ ] Short description (≤80 chars)
+- [ ] Full description (≤4000 chars)
+- [ ] Keywords (≤100 chars, comma-separated)
 - [ ] Privacy Policy URL accessible
 - [ ] Support email/website
 
@@ -917,16 +1028,19 @@ eas submit --platform all --latest
 ## Useful Resources
 
 ### Official Documentation
-- App Store Review Guidelines: https://developer.apple.com/app-store/review/guidelines/
-- Google Play Policy Center: https://play.google.com/console/about/guides/
-- EAS Submit: https://docs.expo.dev/submit/introduction/
+- [App Store Review Guidelines](https://developer.apple.com/app-store/review/guidelines/)
+- [App Store Connect Screenshot Specifications](https://developer.apple.com/help/app-store-connect/reference/screenshot-specifications/)
+- [Google Play Policy Center](https://play.google.com/console/about/guides/)
+- [Google Play Icon Design Specifications](https://developer.android.com/distribute/google-play/resources/icon-design-specifications)
+- [Google Play Preview Assets](https://support.google.com/googleplay/android-developer/answer/9866151)
+- [EAS Submit](https://docs.expo.dev/submit/introduction/)
 
 ### Tools
-- App Store Connect: https://appstoreconnect.apple.com/
-- Google Play Console: https://play.google.com/console/
-- Apple Developer: https://developer.apple.com/
-- Google Cloud Console: https://console.cloud.google.com/
+- [App Store Connect](https://appstoreconnect.apple.com/)
+- [Google Play Console](https://play.google.com/console/)
+- [Apple Developer](https://developer.apple.com/)
+- [Google Cloud Console](https://console.cloud.google.com/)
 
 ### Privacy Policy Generators
-- Termly: https://termly.io/
-- iubenda: https://www.iubenda.com/
+- [Termly](https://termly.io/)
+- [iubenda](https://www.iubenda.com/)
