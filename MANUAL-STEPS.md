@@ -206,3 +206,35 @@ eas build:configure
 ---
 
 **准备好了就开始吧！完成后告诉我！** 🚀
+
+---
+
+## 🔧 常用维护命令
+
+### 修复 Expo 依赖版本
+
+当运行 `npm start` 或 `npx expo start` 时，如果看到类似以下警告：
+
+```
+The following packages should be updated for best compatibility with the installed expo version:
+  expo@54.0.25 - expected version: ~54.0.27
+  expo-router@6.0.15 - expected version: ~6.0.17
+  ...
+```
+
+**解决方法：**
+
+```bash
+# 1. 先停止正在运行的 Expo CLI（如果有）
+
+# 2. 运行修复命令
+npx expo install --fix
+
+# 3. 重新启动项目
+npm start
+```
+
+**说明：**
+- `npx expo install --fix` 会自动将所有 Expo 相关包更新到当前 SDK 的兼容版本
+- 如果在另一个终端有 Expo CLI 正在运行，需要先停止，否则可能无法完全更新
+- 更新后建议提交变更（package.json、package-lock.json、app.json）
