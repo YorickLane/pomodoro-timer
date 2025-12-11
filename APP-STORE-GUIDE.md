@@ -518,33 +518,51 @@ https://expo.dev/artifacts/eas/xxxxx.ipa
 eas submit --platform ios --latest
 ```
 
+**EAS Submit 会自动完成：**
+- ✅ 注册 Bundle Identifier
+- ✅ 在 App Store Connect 创建应用（无需手动创建）
+- ✅ 创建 TestFlight 测试组
+- ✅ 生成 App Store Connect API Key
+- ✅ 上传构建到 TestFlight
+
 **首次提交时的交互提示：**
 ```
-✔ What is your Apple Team ID?
-→ 系统会自动检测，直接回车确认
-
-✔ Would you like to submit build to App Store Connect?
-→ 选择 yes
+✔ Apple ID: → 输入 Apple ID
+› Restoring session...
+› Team YOUR_NAME (TEAM_ID)
+✔ Bundle identifier registered com.yourname.appname
+✔ Prepared App Store Connect for your-app
+✔ TestFlight group created
+✔ Generate a new App Store Connect API Key? → yes
+✔ Submitted your app to Apple App Store Connect!
 ```
 
-提交成功后，构建会出现在 App Store Connect 的 TestFlight 中。
+**注意：** 如果应用名已被占用，EAS 会自动生成临时名称（如 `app-name (abc123)`），可以稍后在 App Store Connect 修改。
+
+**提交成功后输出：**
+```
+ASC App ID:    6756425363
+Build:         1.0.0 (1)
+
+Your binary has been successfully uploaded to App Store Connect!
+```
+
+构建会出现在 App Store Connect 的 TestFlight 中（处理需要 5-10 分钟）。
 
 ---
 
-### 步骤 4：App Store Connect 配置
+### 步骤 4：App Store Connect 完善信息
+
+> EAS Submit 已自动创建应用，现在需要完善详细信息。
 
 登录 https://appstoreconnect.apple.com/
 
-#### 4.1 创建新应用（首次发布）
+#### 4.1 修改应用名称（如需要）
 
-1. 点击 **"+"** → **"新建 App"**
-2. 填写信息：
-   - **平台**：iOS
-   - **名称**：应用显示名称（如：番茄时钟）
-   - **主要语言**：简体中文 或 English
-   - **Bundle ID**：选择 `com.yourname.appname`
-   - **SKU**：唯一标识符（如：pomodoro-timer-001）
-   - **用户访问权限**：完全访问权限
+如果 EAS 生成了临时名称：
+1. 进入应用 → **App 信息**
+2. 修改 **名称** 为你想要的名称（如：番茄时钟）
+3. 点击 **存储**
 
 #### 4.2 填写应用信息
 
