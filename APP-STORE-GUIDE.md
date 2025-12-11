@@ -328,29 +328,61 @@ node scripts/generate-icons.js
 ```
 Pomodoro Timer - Simple & Elegant
 
-A clean and focused Pomodoro timer to boost your productivity.
+A clean and focused Pomodoro timer to help you stay productive and manage your time effectively.
 
 FEATURES:
-• Classic Pomodoro Technique (25/5/15 min)
+• Classic Pomodoro Technique (25 min work + 5 min break)
+• Long break after 4 sessions (15 min)
 • Real-time statistics and progress tracking
 • Smart notifications when sessions end
 • Customizable work and break durations
 • Dark mode support
 • Auto-start next session
 • Complete offline functionality
-• Your data stays on your device
+• Your data stays on your device - 100% privacy
 
 PERFECT FOR:
 • Students studying for exams
 • Developers and designers
+• Remote workers
 • Anyone who needs focused work time
 
 Simple. Focused. Efficient.
 ```
 
+**示例宣传文本（Promotional Text，可选）：**
+
+```
+Stay focused, work smarter. A simple Pomodoro timer to boost your productivity.
+```
+
+**示例关键词（Keywords）：**
+
+```
+pomodoro,timer,focus,productivity,time management,study,work,concentration,task,tomato
+```
+
 ---
 
-### 2.5 隐私政策
+### 2.5 Support URL 和 Privacy Policy URL
+
+**两个 URL 的区别：**
+
+| URL | 用途 | 是否必填 |
+|-----|------|---------|
+| Support URL | 用户寻求帮助、反馈问题的页面 | 必填 |
+| Privacy Policy URL | 隐私政策声明页面 | 必填 |
+
+**推荐做法（使用 GitHub 仓库）：**
+
+```
+Support URL:        https://github.com/你的用户名/pomodoro-timer
+Privacy Policy URL: https://github.com/你的用户名/pomodoro-timer/blob/main/PRIVACY.md
+```
+
+---
+
+### 2.6 隐私政策
 
 **为什么需要：**
 - App Store 和 Google Play 都要求提供隐私政策 URL
