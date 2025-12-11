@@ -48,10 +48,27 @@
    - 组织账号：3-5 个工作日
    - 如需 D-U-N-S 编号或额外验证：7-10 天
 
-4. **审核通过后**
-   - 登录 App Store Connect: https://appstoreconnect.apple.com/
-   - 创建 App ID 和证书
-   - 配置 EAS 提交凭证
+4. **审核通过后（Expo/EAS 项目）**
+
+   使用 EAS 可以**自动完成**证书和配置，无需手动操作：
+
+   ```bash
+   # 1. 确保已登录 EAS
+   eas login
+
+   # 2. 首次构建时，EAS 会自动引导配置
+   eas build --platform ios
+   ```
+
+   **首次运行时按提示操作：**
+   - 输入 Apple ID 和密码登录
+   - 选择 **"Let EAS handle it"** 让 EAS 自动管理证书
+   - EAS 会自动创建 App ID、Distribution Certificate、Provisioning Profile
+
+   **手动查看/管理凭证：**
+   ```bash
+   eas credentials --platform ios
+   ```
 
 **会员权益：**
 - App Store 发布权限
@@ -699,10 +716,27 @@ eas submit --platform all --latest
    - Organization accounts: 3-5 business days
    - If D-U-N-S number or additional verification needed: 7-10 days
 
-4. **After Approval**
-   - Login to App Store Connect: https://appstoreconnect.apple.com/
-   - Create App ID and certificates
-   - Configure EAS submission credentials
+4. **After Approval (Expo/EAS Projects)**
+
+   EAS can **automatically handle** certificates and configuration:
+
+   ```bash
+   # 1. Make sure you're logged in to EAS
+   eas login
+
+   # 2. First build will guide you through setup
+   eas build --platform ios
+   ```
+
+   **Follow the prompts on first run:**
+   - Enter Apple ID and password to login
+   - Select **"Let EAS handle it"** for automatic certificate management
+   - EAS will automatically create App ID, Distribution Certificate, Provisioning Profile
+
+   **Manually view/manage credentials:**
+   ```bash
+   eas credentials --platform ios
+   ```
 
 **Membership Benefits:**
 - App Store publishing rights
