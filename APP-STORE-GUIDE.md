@@ -418,6 +418,241 @@ Simple. Focused. Efficient.
 
 ---
 
+## 2.7 iOS 完整发布流程（Expo/EAS）
+
+> 以下是 Apple Developer 审核通过后，使用 Expo/EAS 发布 iOS 应用的完整流程。
+
+### 步骤 1：EAS 登录和项目关联
+
+```bash
+# 登录 EAS（如已登录会提示）
+eas login
+
+# 查看当前登录账号
+eas whoami
+
+# 如需切换账号，先登出
+eas logout
+eas login
+```
+
+**首次使用或切换账号时，关联项目：**
+```bash
+# 初始化/关联项目到当前 EAS 账号
+eas init
+
+# 如果项目已关联其他账号，需要强制重新初始化
+# 先删除 app.json 中的 extra.eas.projectId，然后运行：
+eas init
+```
+
+关联成功后，`app.json` 会自动添加：
+```json
+{
+  "extra": {
+    "eas": {
+      "projectId": "your-project-id"
+    },
+    "owner": "your-eas-username"
+  }
+}
+```
+
+---
+
+### 步骤 2：首次构建 iOS 应用
+
+```bash
+eas build --platform ios
+```
+
+**构建过程中的交互提示：**
+
+1. **Bundle Identifier 设置**
+   ```
+   ✔ What would you like your iOS bundle identifier to be?
+   → 输入如：com.yourname.appname
+   ```
+
+2. **加密声明**
+   ```
+   ✔ iOS app only uses standard/exempt encryption?
+   → 选择 yes（大多数应用选 yes，除非使用了自定义加密）
+   ```
+
+3. **Apple ID 登录**
+   ```
+   ✔ Do you want to log in to your Apple account?
+   → 选择 yes
+   ✔ Apple ID: → 输入你的 Apple ID
+   ✔ Password: → 输入密码
+   ```
+
+4. **双重认证**
+   ```
+   ✔ Please enter the 6 digit code you received at +86 ••• •••• ••XX:
+   → 输入手机收到的验证码
+   ```
+
+5. **证书生成**
+   ```
+   ✔ Generate a new Apple Distribution Certificate? → yes
+   ✔ Generate a new Apple Provisioning Profile? → yes
+   ```
+
+6. **推送通知配置**
+   ```
+   ✔ Would you like to set up Push Notifications for your project?
+   → 选择 Yes（如果应用需要推送通知）
+   ✔ Generate a new Apple Push Notifications service key? → yes
+   ```
+
+**构建完成后输出：**
+```
+✔ Build finished
+
+🍏 iOS app:
+https://expo.dev/artifacts/eas/xxxxx.ipa
+```
+
+---
+
+### 步骤 3：提交到 App Store Connect
+
+```bash
+# 提交最新构建到 App Store Connect
+eas submit --platform ios --latest
+```
+
+**首次提交时的交互提示：**
+```
+✔ What is your Apple Team ID?
+→ 系统会自动检测，直接回车确认
+
+✔ Would you like to submit build to App Store Connect?
+→ 选择 yes
+```
+
+提交成功后，构建会出现在 App Store Connect 的 TestFlight 中。
+
+---
+
+### 步骤 4：App Store Connect 配置
+
+登录 https://appstoreconnect.apple.com/
+
+#### 4.1 创建新应用（首次发布）
+
+1. 点击 **"+"** → **"新建 App"**
+2. 填写信息：
+   - **平台**：iOS
+   - **名称**：应用显示名称（如：番茄时钟）
+   - **主要语言**：简体中文 或 English
+   - **Bundle ID**：选择 `com.yourname.appname`
+   - **SKU**：唯一标识符（如：pomodoro-timer-001）
+   - **用户访问权限**：完全访问权限
+
+#### 4.2 填写应用信息
+
+**App 信息页面：**
+- **名称**：应用名称
+- **副标题**：简短描述（30 字符内）
+- **类别**：生产力
+- **内容版权**：否
+- **年龄分级**：点击设置 → 全部选"无" → 获得 4+ 分级
+
+**定价和可用性：**
+- **价格**：免费
+- **可用性**：选择发布地区
+
+**隐私政策：**
+- 填写隐私政策 URL（必填）
+
+#### 4.3 准备提交版本
+
+在 **iOS App** 页面：
+
+1. **截图上传**
+   - 6.9" 显示屏（iPhone 15 Pro Max）：至少 2 张
+   - 或 6.5" 显示屏：至少 2 张
+   - 尺寸：1320 x 2868 (6.9") 或 1284 x 2778 (6.5")
+
+2. **应用描述**
+   - 宣传文本（可选，170 字符）
+   - 描述（必填，4000 字符内）
+   - 关键词（100 字符，逗号分隔）
+   - 支持 URL
+   - 营销 URL（可选）
+
+3. **构建版本**
+   - 点击 **"+"** 选择已上传的构建
+   - 如未显示，等待几分钟处理
+
+4. **App 审核信息**
+   - 登录信息：如无需登录选"不需要登录"
+   - 联系信息：填写审核联系人信息
+   - 备注（可选）
+
+#### 4.4 App 隐私
+
+在 **App 隐私** 页面：
+- 如果应用不收集任何数据，选择 **"不收集数据"**
+- 如果收集数据，如实填写数据类型
+
+---
+
+### 步骤 5：提交审核
+
+1. 检查所有信息填写完整
+2. 点击右上角 **"添加以供审核"**
+3. 确认提交信息
+4. 点击 **"提交至 App 审核"**
+
+**审核时间：**
+- 通常 24-48 小时
+- 首次提交可能稍长
+- 可在 App Store Connect 查看审核状态
+
+---
+
+### 步骤 6：发布
+
+审核通过后：
+- **手动发布**：在 App Store Connect 中点击"发布此版本"
+- **自动发布**：如果选择了自动发布，审核通过后自动上架
+- **定时发布**：可以设置具体发布日期
+
+---
+
+### 常见问题
+
+**Q: 构建失败怎么办？**
+```bash
+# 查看详细日志
+eas build:view [BUILD_ID]
+
+# 清除凭证重试
+eas credentials --platform ios
+```
+
+**Q: 提交失败提示 Bundle ID 已存在？**
+- 确保在 App Store Connect 中的 Bundle ID 与构建时设置的一致
+- 如果是其他开发者占用，需要换一个 Bundle ID
+
+**Q: 如何更新已发布的应用？**
+```bash
+# 1. 更新版本号（app.json 中的 version）
+# 2. 重新构建
+eas build --platform ios
+
+# 3. 提交新版本
+eas submit --platform ios --latest
+
+# 4. 在 App Store Connect 填写更新说明，提交审核
+```
+
+---
+
 ## 3️⃣ 提交到应用商店
 
 ### 3.1 提交到 App Store（iOS）
@@ -899,6 +1134,241 @@ eas login
 - GitHub Pages (free)
 - Your own website
 - Third-party services: [Termly](https://termly.io/), [iubenda](https://www.iubenda.com/)
+
+---
+
+## 2.6 Complete iOS Publishing Flow (Expo/EAS)
+
+> Complete flow for publishing iOS apps using Expo/EAS after Apple Developer approval.
+
+### Step 1: EAS Login and Project Setup
+
+```bash
+# Login to EAS (will prompt if already logged in)
+eas login
+
+# Check current logged in account
+eas whoami
+
+# To switch accounts, logout first
+eas logout
+eas login
+```
+
+**First time or switching accounts - link project:**
+```bash
+# Initialize/link project to current EAS account
+eas init
+
+# If project was linked to another account:
+# First remove extra.eas.projectId from app.json, then run:
+eas init
+```
+
+After linking, `app.json` will contain:
+```json
+{
+  "extra": {
+    "eas": {
+      "projectId": "your-project-id"
+    },
+    "owner": "your-eas-username"
+  }
+}
+```
+
+---
+
+### Step 2: First iOS Build
+
+```bash
+eas build --platform ios
+```
+
+**Interactive prompts during build:**
+
+1. **Bundle Identifier**
+   ```
+   ✔ What would you like your iOS bundle identifier to be?
+   → Enter like: com.yourname.appname
+   ```
+
+2. **Encryption Declaration**
+   ```
+   ✔ iOS app only uses standard/exempt encryption?
+   → Select yes (most apps select yes unless using custom encryption)
+   ```
+
+3. **Apple ID Login**
+   ```
+   ✔ Do you want to log in to your Apple account?
+   → Select yes
+   ✔ Apple ID: → Enter your Apple ID
+   ✔ Password: → Enter password
+   ```
+
+4. **Two-Factor Authentication**
+   ```
+   ✔ Please enter the 6 digit code you received at +XX ••• •••• ••XX:
+   → Enter verification code from your phone
+   ```
+
+5. **Certificate Generation**
+   ```
+   ✔ Generate a new Apple Distribution Certificate? → yes
+   ✔ Generate a new Apple Provisioning Profile? → yes
+   ```
+
+6. **Push Notifications Setup**
+   ```
+   ✔ Would you like to set up Push Notifications for your project?
+   → Select Yes (if your app needs push notifications)
+   ✔ Generate a new Apple Push Notifications service key? → yes
+   ```
+
+**Build complete output:**
+```
+✔ Build finished
+
+🍏 iOS app:
+https://expo.dev/artifacts/eas/xxxxx.ipa
+```
+
+---
+
+### Step 3: Submit to App Store Connect
+
+```bash
+# Submit latest build to App Store Connect
+eas submit --platform ios --latest
+```
+
+**First submission prompts:**
+```
+✔ What is your Apple Team ID?
+→ System auto-detects, press Enter to confirm
+
+✔ Would you like to submit build to App Store Connect?
+→ Select yes
+```
+
+After successful submission, the build appears in TestFlight on App Store Connect.
+
+---
+
+### Step 4: App Store Connect Configuration
+
+Login to https://appstoreconnect.apple.com/
+
+#### 4.1 Create New App (First Release)
+
+1. Click **"+"** → **"New App"**
+2. Fill in:
+   - **Platform**: iOS
+   - **Name**: App display name
+   - **Primary Language**: English or your language
+   - **Bundle ID**: Select `com.yourname.appname`
+   - **SKU**: Unique identifier (e.g., pomodoro-timer-001)
+   - **User Access**: Full Access
+
+#### 4.2 Fill App Information
+
+**App Information page:**
+- **Name**: App name
+- **Subtitle**: Short description (30 chars max)
+- **Category**: Productivity
+- **Content Rights**: No
+- **Age Rating**: Click to set → Select "None" for all → Get 4+ rating
+
+**Pricing and Availability:**
+- **Price**: Free
+- **Availability**: Select release regions
+
+**Privacy Policy:**
+- Enter privacy policy URL (required)
+
+#### 4.3 Prepare Submission
+
+On **iOS App** page:
+
+1. **Screenshots**
+   - 6.9" display (iPhone 15 Pro Max): At least 2
+   - Or 6.5" display: At least 2
+   - Size: 1320 x 2868 (6.9") or 1284 x 2778 (6.5")
+
+2. **App Description**
+   - Promotional Text (optional, 170 chars)
+   - Description (required, 4000 chars max)
+   - Keywords (100 chars, comma-separated)
+   - Support URL
+   - Marketing URL (optional)
+
+3. **Build Version**
+   - Click **"+"** to select uploaded build
+   - If not showing, wait a few minutes for processing
+
+4. **App Review Information**
+   - Sign-in Info: Select "Sign-in not required" if no login needed
+   - Contact Info: Fill reviewer contact details
+   - Notes (optional)
+
+#### 4.4 App Privacy
+
+On **App Privacy** page:
+- If app collects no data, select **"Data Not Collected"**
+- If collecting data, fill in data types honestly
+
+---
+
+### Step 5: Submit for Review
+
+1. Verify all information is complete
+2. Click **"Add for Review"** (top right)
+3. Confirm submission info
+4. Click **"Submit to App Review"**
+
+**Review Time:**
+- Usually 24-48 hours
+- First submission may take longer
+- Check status in App Store Connect
+
+---
+
+### Step 6: Release
+
+After approval:
+- **Manual Release**: Click "Release This Version" in App Store Connect
+- **Auto Release**: If selected, automatically goes live after approval
+- **Scheduled Release**: Set specific release date/time
+
+---
+
+### FAQ
+
+**Q: Build failed?**
+```bash
+# View detailed logs
+eas build:view [BUILD_ID]
+
+# Clear credentials and retry
+eas credentials --platform ios
+```
+
+**Q: Submit failed - Bundle ID already exists?**
+- Ensure Bundle ID in App Store Connect matches your build
+- If taken by another developer, use a different Bundle ID
+
+**Q: How to update a published app?**
+```bash
+# 1. Update version number (version in app.json)
+# 2. Build again
+eas build --platform ios
+
+# 3. Submit new version
+eas submit --platform ios --latest
+
+# 4. Fill release notes in App Store Connect, submit for review
+```
 
 ---
 
