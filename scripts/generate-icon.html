@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Zenmodoro Icon Generator</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #f5f5f5;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      gap: 20px;
+    }
+    .icon-container {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .icon-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .icon-box span {
+      font-size: 14px;
+      color: #666;
+    }
+    canvas {
+      border-radius: 20%;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .instructions {
+      max-width: 600px;
+      text-align: center;
+      color: #333;
+      line-height: 1.6;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #E74C3C;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #C0392B;
+    }
+  </style>
+</head>
+<body>
+  <h1>Zenmodoro App Icon</h1>
+
+  <div class="icon-container">
+    <div class="icon-box">
+      <canvas id="icon1024" width="1024" height="1024"></canvas>
+      <span>iOS Icon (1024x1024)</span>
+      <button onclick="downloadIcon('icon1024', 'icon.png')">Download</button>
+    </div>
+    <div class="icon-box">
+      <canvas id="iconPreview" width="200" height="200"></canvas>
+      <span>Preview</span>
+    </div>
+  </div>
+
+  <div class="icon-container" style="margin-top: 40px;">
+    <div class="icon-box">
+      <canvas id="androidFg" width="1024" height="1024"></canvas>
+      <span>Android Foreground</span>
+      <button onclick="downloadIcon('androidFg', 'android-icon-foreground.png')">Download</button>
+    </div>
+    <div class="icon-box">
+      <canvas id="androidBg" width="1024" height="1024"></canvas>
+      <span>Android Background</span>
+      <button onclick="downloadIcon('androidBg', 'android-icon-background.png')">Download</button>
+    </div>
+    <div class="icon-box">
+      <canvas id="splash" width="512" height="512"></canvas>
+      <span>Splash Icon (512x512)</span>
+      <button onclick="downloadIcon('splash', 'splash-icon.png')">Download</button>
+    </div>
+  </div>
+
+  <div class="instructions">
+    <p><strong>Instructions:</strong> Click each "Download" button to save the icons, then replace the files in <code>assets/images/</code></p>
+  </div>
+
+  <script>
+    // Color scheme
+    const colors = {
+      tomato: '#E74C3C',
+      tomatoDark: '#C0392B',
+      tomatoLight: '#EC7063',
+      leaf: '#27AE60',
+      leafDark: '#1E8449',
+      stem: '#784212',
+      background: '#FFFFFF',
+      clockHand: '#FFFFFF',
+      backgroundGradientStart: '#FEF0F0',
+      backgroundGradientEnd: '#FDEDEC'
+    };
+
+    function drawTomato(ctx, size, withBackground = true, isAndroidForeground = false) {
+      const center = size / 2;
+      const tomatoRadius = size * 0.38;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, size, size);
+
+      // Background (for iOS icon)
+      if (withBackground) {
+        const gradient = ctx.createLinearGradient(0, 0, size, size);
+        gradient.addColorStop(0, colors.backgroundGradientStart);
+        gradient.addColorStop(1, colors.backgroundGradientEnd);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, size, size);
+      }
+
+      // Adjust position for Android foreground (needs more padding)
+      const offsetY = isAndroidForeground ? size * 0.02 : 0;
+      const tomatoCenter = center + offsetY;
+
+      // Tomato body - main circle with gradient
+      const tomatoGradient = ctx.createRadialGradient(
+        center - tomatoRadius * 0.3, tomatoCenter - tomatoRadius * 0.3, 0,
+        center, tomatoCenter, tomatoRadius
+      );
+      tomatoGradient.addColorStop(0, colors.tomatoLight);
+      tomatoGradient.addColorStop(0.7, colors.tomato);
+      tomatoGradient.addColorStop(1, colors.tomatoDark);
+
+      ctx.beginPath();
+      ctx.arc(center, tomatoCenter, tomatoRadius, 0, Math.PI * 2);
+      ctx.fillStyle = tomatoGradient;
+      ctx.fill();
+
+      // Tomato highlight
+      ctx.beginPath();
+      ctx.ellipse(
+        center - tomatoRadius * 0.25,
+        tomatoCenter - tomatoRadius * 0.25,
+        tomatoRadius * 0.15,
+        tomatoRadius * 0.1,
+        -Math.PI / 4,
+        0, Math.PI * 2
+      );
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.fill();
+
+      // Stem
+      const stemWidth = size * 0.035;
+      const stemHeight = size * 0.08;
+      ctx.fillStyle = colors.stem;
+      ctx.beginPath();
+      ctx.roundRect(
+        center - stemWidth / 2,
+        tomatoCenter - tomatoRadius - stemHeight * 0.7,
+        stemWidth,
+        stemHeight,
+        stemWidth / 2
+      );
+      ctx.fill();
+
+      // Leaves
+      const leafSize = size * 0.12;
+      ctx.fillStyle = colors.leaf;
+
+      // Left leaf
+      ctx.beginPath();
+      ctx.ellipse(
+        center - leafSize * 0.6,
+        tomatoCenter - tomatoRadius - stemHeight * 0.2,
+        leafSize * 0.7,
+        leafSize * 0.25,
+        -Math.PI / 6,
+        0, Math.PI * 2
+      );
+      ctx.fill();
+
+      // Right leaf
+      ctx.beginPath();
+      ctx.ellipse(
+        center + leafSize * 0.6,
+        tomatoCenter - tomatoRadius - stemHeight * 0.2,
+        leafSize * 0.7,
+        leafSize * 0.25,
+        Math.PI / 6,
+        0, Math.PI * 2
+      );
+      ctx.fill();
+
+      // Clock face circle (subtle)
+      ctx.beginPath();
+      ctx.arc(center, tomatoCenter, tomatoRadius * 0.55, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.lineWidth = size * 0.01;
+      ctx.stroke();
+
+      // Clock hands - showing ~25 minutes (pomodoro time)
+      const handLength = tomatoRadius * 0.35;
+      const minuteHandLength = tomatoRadius * 0.45;
+
+      // Hour hand (pointing to roughly 10 o'clock position)
+      ctx.beginPath();
+      ctx.moveTo(center, tomatoCenter);
+      const hourAngle = -Math.PI / 3; // 10 o'clock
+      ctx.lineTo(
+        center + Math.sin(hourAngle) * handLength,
+        tomatoCenter - Math.cos(hourAngle) * handLength
+      );
+      ctx.strokeStyle = colors.clockHand;
+      ctx.lineWidth = size * 0.025;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Minute hand (pointing to 5, representing 25 minutes)
+      ctx.beginPath();
+      ctx.moveTo(center, tomatoCenter);
+      const minuteAngle = Math.PI; // 6 o'clock (30 min) - close to 25 min
+      ctx.lineTo(
+        center + Math.sin(minuteAngle) * minuteHandLength,
+        tomatoCenter - Math.cos(minuteAngle) * minuteHandLength
+      );
+      ctx.strokeStyle = colors.clockHand;
+      ctx.lineWidth = size * 0.018;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(center, tomatoCenter, size * 0.02, 0, Math.PI * 2);
+      ctx.fillStyle = colors.clockHand;
+      ctx.fill();
+    }
+
+    function drawAndroidBackground(ctx, size) {
+      ctx.clearRect(0, 0, size, size);
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, colors.backgroundGradientStart);
+      gradient.addColorStop(1, colors.backgroundGradientEnd);
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+    }
+
+    function downloadIcon(canvasId, filename) {
+      const canvas = document.getElementById(canvasId);
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Draw all icons
+    function init() {
+      // iOS icon (1024x1024)
+      const ctx1024 = document.getElementById('icon1024').getContext('2d');
+      drawTomato(ctx1024, 1024, true);
+
+      // Preview (200x200)
+      const ctxPreview = document.getElementById('iconPreview').getContext('2d');
+      drawTomato(ctxPreview, 200, true);
+
+      // Android foreground (transparent background, with safe zone padding)
+      const ctxAndroidFg = document.getElementById('androidFg').getContext('2d');
+      drawTomato(ctxAndroidFg, 1024, false, true);
+
+      // Android background
+      const ctxAndroidBg = document.getElementById('androidBg').getContext('2d');
+      drawAndroidBackground(ctxAndroidBg, 1024);
+
+      // Splash icon
+      const ctxSplash = document.getElementById('splash').getContext('2d');
+      drawTomato(ctxSplash, 512, false);
+    }
+
+    init();
+  </script>
+</body>
+</html>
