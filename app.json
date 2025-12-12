@@ -24,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.wt8899.pomodorotimer"
+      "package": "com.zbx7858.pomodorotimer"
     },
     "web": {
       "output": "static",

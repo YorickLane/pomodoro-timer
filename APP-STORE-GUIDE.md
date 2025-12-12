@@ -717,55 +717,89 @@ eas submit --platform ios --latest
 
 ### 3.2 提交到 Google Play（Android）
 
-**步骤：**
+> **重要：** 首次提交必须手动上传，之后可以使用 EAS Submit 自动提交。
+
+#### 步骤 1：构建 Android 应用
 
 ```bash
-# 1. 构建 Production 版本（AAB 格式）
-eas build --profile production --platform android
-
-# 2. 自动提交到 Google Play
-eas submit --platform android --latest
-
-# 或手动提交：
-# - 下载 .aab 文件
-# - 在 Google Play Console 上传
+eas build --platform android
 ```
 
-**在 Google Play Console 中配置：**
+构建完成后会生成 `.aab` 文件链接。
 
-1. **创建应用**
-   - 登录 https://play.google.com/console/
-   - 点击"创建应用"
-   - 填写：名称、默认语言、应用类型、免费/付费
+#### 步骤 2：配置 Google Service Account（首次需要）
 
-2. **商店设置**
-   - **主要商店详情**
-     - 应用名称
-     - 简短描述（80 字符）
-     - 详细描述（4000 字符）
-   - **图形素材**
-     - 应用图标（512x512）
-     - 功能图片（1024x500）**必需**
-     - 手机截图（至少 2 张）
+用于 EAS Submit 自动提交，配置步骤：
 
-3. **应用内容**
-   - **隐私政策**：填写 URL
-   - **应用访问权限**：选择"所有功能无限制"
-   - **广告**：选择"否"
-   - **内容分级**：填写问卷，获得"所有人"分级
-   - **目标受众**：选择年龄组
-   - **新闻应用**：选择"否"
-   - **数据安全**：填写数据收集声明
+1. **Google Cloud Console** (https://console.cloud.google.com/)
+   - 创建或选择项目
+   - 启用 **Google Play Android Developer API**
+   - 创建 **Service Account**
+   - 生成 **JSON 密钥**并下载
 
-4. **发布设置**
-   - **选择国家/地区**
-   - **托管应用签名**（推荐使用 Google Play App Signing）
+2. **Google Play Console** (https://play.google.com/console/)
+   - Settings → API access → Link Google Cloud 项目
+   - 授权 Service Account 权限（Admin 或 Release manager）
 
-5. **版本发布**
-   - 进入"生产" → "创建新版本"
-   - 上传 .aab 文件
-   - 填写版本说明
-   - 审核并发布
+3. **项目配置**
+   ```bash
+   # 将 JSON 密钥放到项目根目录
+   mv ~/Downloads/xxx.json ./google-service-account.json
+
+   # 添加到 .gitignore（重要！不要提交到 Git）
+   echo "google-service-account.json" >> .gitignore
+   ```
+
+#### 步骤 3：首次手动上传
+
+**首次提交必须手动完成：**
+
+1. 下载构建的 `.aab` 文件
+2. Google Play Console → **Internal testing** → **Create new release**
+3. 上传 `.aab` 文件
+4. 填写 Release notes（版本说明）
+5. 保存并发布
+
+#### 步骤 4：后续版本自动提交
+
+首次手动上传后，之后可以使用：
+
+```bash
+eas submit --platform android --latest
+```
+
+#### Google Play Console 配置清单
+
+**创建应用时：**
+- App name：应用名称
+- Default language：English (United States)
+- App or game：App
+- Free or paid：Free
+
+**Store settings：**
+- **Tags**：选择相关标签（Productivity, Timer, Focus 等，最多 5 个）
+- **Target age**：13+, 16+, 18+（不选 12 岁以下避免儿童政策）
+
+**Main store listing：**
+- Short description（80 字符）
+- Full description（4000 字符）
+- App icon（512x512）
+- **Feature graphic（1024x500）** - **必需**
+- Phone screenshots（至少 2 张）
+
+**App content：**
+- Privacy policy URL
+- App access：All functionality available
+- Ads：No ads
+- Content rating：填写问卷
+- Target audience：选择年龄组
+- News app：No
+- Data safety：填写数据收集声明
+
+**Internal testing：**
+- 创建测试人员邮件列表
+- 上传 AAB 构建
+- 发布到测试轨道
 
 ---
 

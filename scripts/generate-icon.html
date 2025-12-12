@@ -86,6 +86,14 @@
     </div>
   </div>
 
+  <div class="icon-container" style="margin-top: 40px;">
+    <div class="icon-box">
+      <canvas id="featureGraphic" width="1024" height="500"></canvas>
+      <span>Google Play Feature Graphic (1024x500)</span>
+      <button onclick="downloadIcon('featureGraphic', 'feature-graphic.png')">Download</button>
+    </div>
+  </div>
+
   <div class="instructions">
     <p><strong>Instructions:</strong> Click each "Download" button to save the icons, then replace the files in <code>assets/images/</code></p>
   </div>
@@ -255,6 +263,100 @@
       link.click();
     }
 
+    function drawFeatureGraphic(ctx, width, height) {
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height);
+
+      // Background gradient
+      const gradient = ctx.createLinearGradient(0, 0, width, height);
+      gradient.addColorStop(0, '#FEF0F0');
+      gradient.addColorStop(0.5, '#FFFFFF');
+      gradient.addColorStop(1, '#FDEDEC');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
+
+      // Draw decorative circles in background
+      ctx.globalAlpha = 0.1;
+      ctx.fillStyle = colors.tomato;
+      ctx.beginPath();
+      ctx.arc(width * 0.1, height * 0.8, 80, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(width * 0.9, height * 0.2, 60, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Draw small tomato icon on the left
+      const iconSize = 180;
+      const iconX = width * 0.18;
+      const iconY = height / 2;
+
+      // Tomato body
+      const tomatoGradient = ctx.createRadialGradient(
+        iconX - iconSize * 0.15, iconY - iconSize * 0.15, 0,
+        iconX, iconY, iconSize * 0.4
+      );
+      tomatoGradient.addColorStop(0, colors.tomatoLight);
+      tomatoGradient.addColorStop(0.7, colors.tomato);
+      tomatoGradient.addColorStop(1, colors.tomatoDark);
+
+      ctx.beginPath();
+      ctx.arc(iconX, iconY, iconSize * 0.4, 0, Math.PI * 2);
+      ctx.fillStyle = tomatoGradient;
+      ctx.fill();
+
+      // Stem
+      ctx.fillStyle = colors.stem;
+      ctx.beginPath();
+      ctx.roundRect(iconX - 6, iconY - iconSize * 0.4 - 15, 12, 25, 6);
+      ctx.fill();
+
+      // Leaves
+      ctx.fillStyle = colors.leaf;
+      ctx.beginPath();
+      ctx.ellipse(iconX - 20, iconY - iconSize * 0.4 - 5, 25, 8, -Math.PI / 6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(iconX + 20, iconY - iconSize * 0.4 - 5, 25, 8, Math.PI / 6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Clock hands on tomato
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+
+      // Hour hand
+      ctx.beginPath();
+      ctx.moveTo(iconX, iconY);
+      ctx.lineTo(iconX - 20, iconY - 25);
+      ctx.stroke();
+
+      // Minute hand
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(iconX, iconY);
+      ctx.lineTo(iconX, iconY + 35);
+      ctx.stroke();
+
+      // Center dot
+      ctx.beginPath();
+      ctx.arc(iconX, iconY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = 'white';
+      ctx.fill();
+
+      // App name "Zenmodoro"
+      ctx.fillStyle = '#2C3E50';
+      ctx.font = 'bold 72px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('Zenmodoro', width * 0.32, height * 0.42);
+
+      // Tagline
+      ctx.fillStyle = '#7F8C8D';
+      ctx.font = '32px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillText('Stay Focused. Work Smarter.', width * 0.32, height * 0.62);
+    }
+
     // Draw all icons
     function init() {
       // iOS icon (1024x1024)
@@ -276,6 +378,10 @@
       // Splash icon
       const ctxSplash = document.getElementById('splash').getContext('2d');
       drawTomato(ctxSplash, 512, false);
+
+      // Feature Graphic for Google Play
+      const ctxFeature = document.getElementById('featureGraphic').getContext('2d');
+      drawFeatureGraphic(ctxFeature, 1024, 500);
     }
 
     init();
