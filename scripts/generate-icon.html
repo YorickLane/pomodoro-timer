@@ -84,6 +84,11 @@
       <span>Splash Icon (512x512)</span>
       <button onclick="downloadIcon('splash', 'splash-icon.png')">Download</button>
     </div>
+    <div class="icon-box">
+      <canvas id="androidMono" width="1024" height="1024"></canvas>
+      <span>Android Monochrome</span>
+      <button onclick="downloadIcon('androidMono', 'android-icon-monochrome.png')">Download</button>
+    </div>
   </div>
 
   <div class="icon-container" style="margin-top: 40px;">
@@ -255,6 +260,67 @@
       ctx.fillRect(0, 0, size, size);
     }
 
+    function drawMonochrome(ctx, size) {
+      const center = size / 2;
+      const tomatoRadius = size * 0.38;
+      const monoColor = '#FFFFFF';
+
+      // Clear canvas (transparent background)
+      ctx.clearRect(0, 0, size, size);
+
+      // Adjust position (same as Android foreground)
+      const offsetY = size * 0.02;
+      const tomatoCenter = center + offsetY;
+
+      // Tomato body - solid white circle
+      ctx.beginPath();
+      ctx.arc(center, tomatoCenter, tomatoRadius, 0, Math.PI * 2);
+      ctx.fillStyle = monoColor;
+      ctx.fill();
+
+      // Stem
+      const stemWidth = size * 0.035;
+      const stemHeight = size * 0.08;
+      ctx.fillStyle = monoColor;
+      ctx.beginPath();
+      ctx.roundRect(
+        center - stemWidth / 2,
+        tomatoCenter - tomatoRadius - stemHeight * 0.7,
+        stemWidth,
+        stemHeight,
+        stemWidth / 2
+      );
+      ctx.fill();
+
+      // Leaves
+      const leafSize = size * 0.12;
+      ctx.fillStyle = monoColor;
+
+      // Left leaf
+      ctx.beginPath();
+      ctx.ellipse(
+        center - leafSize * 0.6,
+        tomatoCenter - tomatoRadius - stemHeight * 0.2,
+        leafSize * 0.7,
+        leafSize * 0.25,
+        -Math.PI / 6,
+        0, Math.PI * 2
+      );
+      ctx.fill();
+
+      // Right leaf
+      ctx.beginPath();
+      ctx.ellipse(
+        center + leafSize * 0.6,
+        tomatoCenter - tomatoRadius - stemHeight * 0.2,
+        leafSize * 0.7,
+        leafSize * 0.25,
+        Math.PI / 6,
+        0, Math.PI * 2
+      );
+      ctx.fill();
+    }
+
     function downloadIcon(canvasId, filename) {
       const canvas = document.getElementById(canvasId);
       const link = document.createElement('a');
@@ -378,6 +444,10 @@
       // Splash icon
       const ctxSplash = document.getElementById('splash').getContext('2d');
       drawTomato(ctxSplash, 512, false);
+
+      // Android monochrome (for themed icons on Android 13+)
+      const ctxMono = document.getElementById('androidMono').getContext('2d');
+      drawMonochrome(ctxMono, 1024);
 
       // Feature Graphic for Google Play
       const ctxFeature = document.getElementById('featureGraphic').getContext('2d');
