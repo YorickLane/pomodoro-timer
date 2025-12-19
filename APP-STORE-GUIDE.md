@@ -8,6 +8,32 @@
 
 ---
 
+## ⚠️ 重要提醒：应用名称一致性
+
+**在开始发布前，请确保以下名称保持一致：**
+
+| 位置 | 配置/设置 | 显示位置 |
+|------|----------|----------|
+| `app.json` → `name` | 项目配置 | **设备主屏幕**上显示的名称 |
+| App Store Connect | 商店配置 | **App Store** 中显示的名称 |
+| Google Play Console | 商店配置 | **Google Play** 中显示的名称 |
+
+**踩坑经验：** 如果 `app.json` 中的 `name`（如 `pomodoro-timer`）与商店名称（如 `Zenmodoro`）不一致，会导致：
+- **App Store 审核被拒**（Guideline 2.3.8 - Accurate Metadata）
+- **Google Play Production Access 被拒**
+
+**解决方案：** 在项目初期就确定最终应用名称，在 `app.json` 中直接使用：
+```json
+{
+  "expo": {
+    "name": "Zenmodoro",  // ← 使用最终名称，不要用临时名称
+    "slug": "zenmodoro"
+  }
+}
+```
+
+---
+
 ## 1️⃣ 开发者账号注册
 
 ### 1.1 Apple Developer Program（iOS 发布必需）
@@ -182,11 +208,27 @@ eas login
 
 **免费计划限制：**
 - 每月 30 次构建
-- 队列优先级较低
+- 队列优先级较低（可能需要等待 30-60 分钟）
 
 **付费计划（可选）：**
 - Production: $99/月 - 无限构建，优先队列
 - Enterprise: 联系销售
+
+**本地构建方案（免费替代）：**
+
+如果不想等待 EAS 云端队列，可以使用本地构建：
+
+```bash
+# iOS 本地构建（需要 macOS + Xcode + Fastlane）
+eas build --platform ios --local
+
+# Android 本地构建（需要 Android Studio + JDK）
+eas build --platform android --local
+```
+
+**本地构建环境要求：**
+- **iOS**：macOS、Xcode、Fastlane (`brew install fastlane`)
+- **Android**：Android Studio、Android SDK、Java JDK
 
 ---
 
@@ -218,23 +260,43 @@ node scripts/generate-icons.js
 
 ### 2.2 应用截图
 
-#### iOS 截图尺寸（2024年9月更新）
+#### iOS 截图尺寸
 
-> **重要变化：** Apple 简化了截图要求，现在只需提供一个主要尺寸，其他尺寸会自动缩放。
+> **⚠️ 重要：** App Store 要求特定分辨率的截图，不是所有模拟器都能生成符合要求的截图！
 
-| 设备 | 屏幕尺寸 | 像素（竖屏） | 像素（横屏） | 状态 |
-|------|---------|-------------|-------------|------|
-| iPhone 16 Pro Max, 15 Pro Max, 15 Plus 等 | 6.9" | 1320 x 2868 | 2868 x 1320 | **必需**（或提供 6.5"） |
-| iPhone 14 Plus, 13 Pro Max, 12 Pro Max 等 | 6.5" | 1284 x 2778 | 2778 x 1284 | 如未提供 6.9" 则必需 |
-| iPhone 16 Pro, 16, 15 Pro, 15, 14 Pro | 6.3" | 1179 x 2556 | 2556 x 1179 | 可选（自动从 6.5" 缩放） |
-| iPhone 14, 13 Pro, 13, 12 Pro, 12 等 | 6.1" | 1170 x 2532 | 2532 x 1170 | 可选（自动从 6.5" 缩放） |
-| iPhone 8 Plus, 7 Plus, 6S Plus | 5.5" | 1242 x 2208 | 2208 x 1242 | 可选（自动从 6.1" 缩放） |
+**6.5 英寸 iPhone 截图（必需）：**
+
+App Store 接受的分辨率：`1242 × 2688` 或 `1284 × 2778`
+
+| 模拟器设备 | 分辨率 | 是否符合要求 |
+|-----------|--------|-------------|
+| iPhone 12 Pro Max | 1284 × 2778 | ✅ 符合 |
+| iPhone 13 Pro Max | 1284 × 2778 | ✅ 符合 |
+| **iPhone 14 Plus** | 1284 × 2778 | ✅ **推荐** |
+| iPhone 14 Pro Max | 1290 × 2796 | ❌ 不符合 |
+| iPhone 15/16 Pro Max | 1320 × 2868 | ❌ 不符合 |
+
+**踩坑经验：** iPhone 14 Pro Max 及更新的 Pro Max 机型分辨率已改变，截图会被 App Store 拒绝！请使用 **iPhone 14 Plus** 或 **iPhone 13 Pro Max** 模拟器。
+
+**12.9/13 英寸 iPad 截图（必需）：**
+
+App Store 接受的分辨率：`2048 × 2732` 或 `2064 × 2752`
+
+| 模拟器设备 | 分辨率 | 是否符合要求 |
+|-----------|--------|-------------|
+| iPad Pro 12.9" (1-4代) | 2048 × 2732 | ✅ 符合 |
+| **iPad Pro 13" (M4)** | 2064 × 2752 | ✅ **推荐** |
+
+**在 Xcode 中添加模拟器：**
+1. Xcode → **Window** → **Devices and Simulators**
+2. 点击 **Simulators** 标签 → 左下角 **+**
+3. 选择 **iPhone 14 Plus** 或 **iPhone 13 Pro Max**
 
 **iOS 截图要求：**
 - 格式：.jpeg、.jpg 或 .png
 - 数量：1-10 张
 - 分辨率：72 dpi，RGB，无透明度
-- **建议：提供 6.9" 尺寸截图，其他尺寸自动生成**
+- 截图快捷键：在模拟器中按 **Cmd + S**
 
 #### Android 截图尺寸
 
@@ -800,6 +862,76 @@ eas submit --platform android --latest
 - 创建测试人员邮件列表
 - 上传 AAB 构建
 - 发布到测试轨道
+
+---
+
+### 3.3 Google Play 封闭测试（新个人账号必需）
+
+> **⚠️ 重要：** 2023年11月13日后创建的**个人开发者账号**必须完成封闭测试才能申请 Production Access！
+
+#### 封闭测试要求
+
+| 要求 | 说明 |
+|------|------|
+| 测试人员数量 | 至少 **12 人** |
+| 测试时长 | 连续 **14 天** opt-in |
+| 测试人员要求 | 必须有 Android 设备 + Google Play |
+
+#### 测试人员需要做什么
+
+| 必须做 | 不需要做 |
+|--------|----------|
+| ✅ 通过测试链接 opt-in 加入测试 | ❌ 不需要评分 Rating |
+| ✅ 从 Google Play 下载安装（不能 sideload） | ❌ 不需要公开评价 |
+| ✅ 实际使用应用 1-2 分钟 | ❌ 不需要每天打开 |
+| ✅ 保持 opt-in 状态 14 天 | |
+
+#### 封闭测试流程
+
+1. **创建封闭测试轨道**
+   - Google Play Console → Testing → Closed testing
+   - 创建测试人员邮件列表（Email lists 或 Google Groups）
+
+2. **上传 AAB 并发布**
+   - Upload → 上传 AAB 文件
+   - 填写 Release name 和 Release notes
+   - Start rollout to Closed testing
+
+3. **获取测试链接并邀请测试人员**
+   ```
+   https://play.google.com/apps/testing/com.yourname.appname
+   ```
+
+4. **等待 14 天**
+   - 测试人员 opt-in 后开始计算
+   - 期间可以上传新版本（不影响计时）
+
+5. **申请 Production Access**
+   - 14 天后在 Dashboard 申请
+   - Google 审核通常需要 7 天
+
+#### 常见问题
+
+**Q: 测试期间可以更新应用吗？**
+A: 可以，上传新版本不会影响 14 天计时，测试人员会自动收到更新。
+
+**Q: 测试人员卸载应用会影响计数吗？**
+A: 不会，只有通过测试链接点击 "Leave the test" 才会退出。
+
+**Q: 如何找到 12 个测试人员？**
+- 朋友和家人（需要有 Google Play 的 Android 设备）
+- 开发者社区（V2EX、Reddit 等）
+- 付费测试服务（如 [Testers Community](https://www.testerscommunity.com/)）
+
+#### Production Access 被拒常见原因
+
+| 原因 | 解决方案 |
+|------|----------|
+| 测试人员不足 12 人 | 确保至少 12 人 opt-in |
+| 测试人员参与度不够 | 确保测试人员实际使用应用 |
+| 14 天不连续 | 不要暂停测试轨道 |
+| 应用名称不一致 | 确保 app.json name 与商店名称一致 |
+| 应用质量问题 | 检查 Pre-launch report，修复问题 |
 
 ---
 
