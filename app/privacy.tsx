@@ -16,6 +16,7 @@ export default function PrivacyPolicyScreen() {
           title: t('settings.about.privacy_policy.label'),
           headerStyle: { backgroundColor: colors.background },
           headerTintColor: colors.text,
+          headerBackTitle: t('common.back'),
         }}
       />
       <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
