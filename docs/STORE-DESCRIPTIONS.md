@@ -158,6 +158,33 @@ Download now and start your focused journey!
 
 ---
 
+## 商店截图生成工具
+
+### 免费工具
+
+| 工具 | 特点 | 链接 |
+|------|------|------|
+| **AppMockUp Studio** | 免费、无水印、专业模板 | https://app-mockup.com/ |
+| **Previewed** | 免费、数百个模板 | https://previewed.app/app-store-screenshot-generator/ |
+| **Hotpot AI** | 免费、AI 辅助 | https://hotpot.ai/app-store-screenshot-generator |
+
+### 专业级（付费）
+
+| 工具 | 特点 | 链接 |
+|------|------|------|
+| **Screenshots Pro** | API 自动化、CI/CD 集成、自动翻译 | https://screenshots.pro/ |
+| **AppScreens** | 批量生成、多语言、9万+开发者使用 | https://appscreens.com/ |
+| **Placeit** | 海量模板、简单上传即可 | https://placeit.net/mockups/app-store-screen |
+
+### 使用流程
+1. 在模拟器/真机上截取应用截图
+2. 上传到工具网站
+3. 选择设备框架和背景
+4. 添加功能说明文字
+5. 导出并上传到商店
+
+---
+
 ## ASO 关键词
 
 ### English Keywords

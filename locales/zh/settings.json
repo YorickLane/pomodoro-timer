@@ -73,6 +73,10 @@
       "label": "隐私政策",
       "hint": "查看隐私政策"
     },
+    "feedback": {
+      "label": "反馈建议",
+      "hint": "报告问题或提出建议"
+    },
     "version": {
       "label": "版本",
       "hint": "当前应用版本"

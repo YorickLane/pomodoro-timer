@@ -73,6 +73,10 @@
       "label": "Privacy Policy",
       "hint": "View our privacy policy"
     },
+    "feedback": {
+      "label": "Send Feedback",
+      "hint": "Report bugs or suggest features"
+    },
     "version": {
       "label": "Version",
       "hint": "Current app version"

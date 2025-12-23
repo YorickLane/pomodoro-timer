@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert, Linking } from 'react-native';
 import { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -454,6 +454,24 @@ export default function SettingsScreen() {
             </View>
           </View>
           <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}
+          onPress={() => Linking.openURL('https://github.com/YorickLane/pomodoro-timer/issues')}
+        >
+          <View style={styles.settingLeft}>
+            <Ionicons name="chatbubble-ellipses" size={24} color={colors.warning} />
+            <View style={styles.settingInfo}>
+              <Text style={[styles.settingLabel, { color: colors.text }]}>
+                {t('settings.about.feedback.label')}
+              </Text>
+              <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
+                {t('settings.about.feedback.hint')}
+              </Text>
+            </View>
+          </View>
+          <Ionicons name="open-outline" size={20} color={colors.textSecondary} />
         </TouchableOpacity>
 
         <View style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}>
