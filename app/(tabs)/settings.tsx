@@ -2,23 +2,26 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert } f
 import { useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'expo-router';
+import Constants from 'expo-constants';
 import { useThemeColors } from '@/hooks/useThemeColors';
 import { usePomodoroStore } from '@/store/usePomodoroStore';
+import { ThemeMode } from '@/types/models';
 import {
   requestNotificationPermissions,
   sendTestNotification,
 } from '@/lib/notifications';
 
 export default function SettingsScreen() {
-  const { t, i18n } = useTranslation(); // 使用响应式的 i18n
-  const { colors } = useThemeColors();
+  const { t, i18n } = useTranslation();
+  const { colors, themeMode } = useThemeColors();
   const { settings, updateSetting, initialize } = usePomodoroStore();
+  const router = useRouter();
 
   useEffect(() => {
     initialize();
   }, []);
 
-  // 测试通知
   const handleTestNotification = async () => {
     const hasPermission = await requestNotificationPermissions();
     if (!hasPermission) {
@@ -30,23 +33,24 @@ export default function SettingsScreen() {
     Alert.alert(t('common.confirm'), t('settings.notifications.test_success'));
   };
 
-  // 切换语言
   const changeLanguage = (lang: string) => {
     i18n.changeLanguage(lang);
   };
 
-  // 调整时长
+  const changeTheme = (mode: ThemeMode) => {
+    updateSetting('theme_mode', mode);
+  };
+
   const adjustDuration = (key: 'work_duration' | 'short_break_duration' | 'long_break_duration', delta: number) => {
     if (!settings) return;
     const currentValue = settings[key];
-    const newValue = Math.max(1, Math.min(120, currentValue + delta)); // 限制在 1-120 分钟
+    const newValue = Math.max(1, Math.min(120, currentValue + delta));
     updateSetting(key, newValue);
   };
 
-  // 调整每日目标
   const adjustDailyGoal = (delta: number) => {
     if (!settings) return;
-    const newValue = Math.max(1, Math.min(20, settings.daily_goal + delta)); // 限制在 1-20
+    const newValue = Math.max(1, Math.min(20, settings.daily_goal + delta));
     updateSetting('daily_goal', newValue);
   };
 
@@ -60,8 +64,76 @@ export default function SettingsScreen() {
     );
   }
 
+  const appVersion = Constants.expoConfig?.version || '1.0.0';
+
   return (
     <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* 外观设置 */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          {t('settings.theme.title')}
+        </Text>
+
+        <View style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}>
+          <View style={styles.settingLeft}>
+            <Ionicons name="contrast" size={24} color={colors.primary} />
+            <View style={styles.settingInfo}>
+              <Text style={[styles.settingLabel, { color: colors.text }]}>
+                {t('settings.theme.label')}
+              </Text>
+              <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
+                {t('settings.theme.hint')}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.themeButtons}>
+            <TouchableOpacity
+              style={[
+                styles.themeButton,
+                { borderColor: colors.border },
+                themeMode === 'system' && { backgroundColor: colors.primary },
+              ]}
+              onPress={() => changeTheme('system')}
+            >
+              <Text style={[
+                styles.themeButtonText,
+                { color: themeMode === 'system' ? 'white' : colors.text },
+              ]}>
+                {t('settings.theme.system')}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.themeButton,
+                { borderColor: colors.border },
+                themeMode === 'light' && { backgroundColor: colors.primary },
+              ]}
+              onPress={() => changeTheme('light')}
+            >
+              <Ionicons
+                name="sunny"
+                size={14}
+                color={themeMode === 'light' ? 'white' : colors.text}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.themeButton,
+                { borderColor: colors.border },
+                themeMode === 'dark' && { backgroundColor: colors.primary },
+              ]}
+              onPress={() => changeTheme('dark')}
+            >
+              <Ionicons
+                name="moon"
+                size={14}
+                color={themeMode === 'dark' ? 'white' : colors.text}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
       {/* 语言设置 */}
       <View style={styles.section}>
         <Text style={[styles.sectionTitle, { color: colors.text }]}>
@@ -359,6 +431,50 @@ export default function SettingsScreen() {
           />
         </View>
       </View>
+
+      {/* 关于 */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.text }]}>
+          {t('settings.about.title')}
+        </Text>
+
+        <TouchableOpacity
+          style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}
+          onPress={() => router.push('/privacy' as never)}
+        >
+          <View style={styles.settingLeft}>
+            <Ionicons name="shield-checkmark" size={24} color={colors.success} />
+            <View style={styles.settingInfo}>
+              <Text style={[styles.settingLabel, { color: colors.text }]}>
+                {t('settings.about.privacy_policy.label')}
+              </Text>
+              <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
+                {t('settings.about.privacy_policy.hint')}
+              </Text>
+            </View>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color={colors.textSecondary} />
+        </TouchableOpacity>
+
+        <View style={[styles.settingItem, { backgroundColor: colors.cardBackground }]}>
+          <View style={styles.settingLeft}>
+            <Ionicons name="information-circle" size={24} color={colors.primary} />
+            <View style={styles.settingInfo}>
+              <Text style={[styles.settingLabel, { color: colors.text }]}>
+                {t('settings.about.version.label')}
+              </Text>
+              <Text style={[styles.settingHint, { color: colors.textSecondary }]}>
+                {t('settings.about.version.hint')}
+              </Text>
+            </View>
+          </View>
+          <Text style={[styles.versionText, { color: colors.textSecondary }]}>
+            v{appVersion}
+          </Text>
+        </View>
+      </View>
+
+      <View style={styles.bottomPadding} />
     </ScrollView>
   );
 }
@@ -456,5 +572,29 @@ const styles = StyleSheet.create({
   languageButtonText: {
     fontSize: 14,
     fontWeight: '600',
+  },
+  themeButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  themeButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    minWidth: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  themeButtonText: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  versionText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+  bottomPadding: {
+    height: 40,
   },
 });

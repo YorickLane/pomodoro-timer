@@ -63,6 +63,8 @@ export class MobileStorageAdapter implements IStorageAdapter {
       sound_enabled: true,
       auto_start_break: false,
       auto_start_work: false,
+      theme_mode: 'system',
+      onboarding_completed: false,
     };
 
     const result = await db.getFirstAsync<{ count: number }>(

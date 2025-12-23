@@ -1,5 +1,5 @@
 {
-  "app_name": "Pomodoro Timer",
+  "app_name": "Zenmodoro",
   "loading": "Loading...",
   "confirm": "Confirm",
   "cancel": "Cancel",
@@ -9,5 +9,17 @@
   "minutes": "{{count}} min",
   "minutes_full": "{{count}} minutes",
   "count_unit": "{{count}}",
-  "privacy_policy": "Privacy Policy"
+  "privacy_policy": "Privacy Policy",
+  "onboarding": {
+    "welcome": "Welcome to Zenmodoro",
+    "slide1_title": "Focus Better",
+    "slide1_desc": "Use the Pomodoro Technique to boost your productivity. Work in focused 25-minute sessions followed by short breaks.",
+    "slide2_title": "Track Progress",
+    "slide2_desc": "Monitor your daily focus time and completed sessions. Set goals and watch your productivity grow.",
+    "slide3_title": "Stay Flexible",
+    "slide3_desc": "Customize timer durations, notifications, and themes to match your workflow.",
+    "get_started": "Get Started",
+    "next": "Next",
+    "skip": "Skip"
+  }
 }

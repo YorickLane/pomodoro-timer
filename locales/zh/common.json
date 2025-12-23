@@ -1,5 +1,5 @@
 {
-  "app_name": "番茄钟",
+  "app_name": "Zenmodoro",
   "loading": "加载中...",
   "confirm": "确认",
   "cancel": "取消",
@@ -9,5 +9,17 @@
   "minutes": "{{count}} 分钟",
   "minutes_full": "{{count}} 分钟",
   "count_unit": "{{count}} 个",
-  "privacy_policy": "隐私政策"
+  "privacy_policy": "隐私政策",
+  "onboarding": {
+    "welcome": "欢迎使用 Zenmodoro",
+    "slide1_title": "专注更高效",
+    "slide1_desc": "使用番茄工作法提升效率。以25分钟为一个专注周期，配合短暂休息，让工作更有节奏。",
+    "slide2_title": "追踪进度",
+    "slide2_desc": "记录每日专注时长和完成的番茄钟数量。设定目标，见证效率提升。",
+    "slide3_title": "灵活定制",
+    "slide3_desc": "自定义计时器时长、通知提醒和主题外观，打造专属的专注体验。",
+    "get_started": "开始使用",
+    "next": "下一步",
+    "skip": "跳过"
+  }
 }

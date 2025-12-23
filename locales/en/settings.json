@@ -1,6 +1,15 @@
 {
   "title": "Settings",
 
+  "theme": {
+    "title": "Appearance",
+    "label": "Theme",
+    "hint": "Choose light or dark mode",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+
   "duration": {
     "title": "Duration Settings",
     "work": {
@@ -56,5 +65,17 @@
     "title": "Language",
     "label": "App Language",
     "hint": "Change display language"
+  },
+
+  "about": {
+    "title": "About",
+    "privacy_policy": {
+      "label": "Privacy Policy",
+      "hint": "View our privacy policy"
+    },
+    "version": {
+      "label": "Version",
+      "hint": "Current app version"
+    }
   }
 }

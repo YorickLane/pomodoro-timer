@@ -58,6 +58,8 @@ export class WebStorageAdapter implements IStorageAdapter {
         sound_enabled: true,
         auto_start_break: false,
         auto_start_work: false,
+        theme_mode: 'system',
+        onboarding_completed: false,
       };
 
       for (const [key, value] of Object.entries(defaultSettings)) {

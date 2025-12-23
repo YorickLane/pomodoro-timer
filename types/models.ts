@@ -18,6 +18,9 @@ export interface PomodoroSession {
   label?: string;                 // 可选标签
 }
 
+// 主题模式
+export type ThemeMode = 'system' | 'light' | 'dark';
+
 // 应用设置
 export interface AppSettings {
   work_duration: number;          // 工作时长（分钟）默认 25
@@ -28,6 +31,8 @@ export interface AppSettings {
   sound_enabled: boolean;         // 是否启用声音
   auto_start_break: boolean;      // 自动开始休息
   auto_start_work: boolean;       // 自动开始工作
+  theme_mode: ThemeMode;          // 主题模式：跟随系统/浅色/深色
+  onboarding_completed: boolean;  // 是否完成引导
 }
 
 // 今日统计

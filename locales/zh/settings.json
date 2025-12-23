@@ -1,6 +1,15 @@
 {
   "title": "设置",
 
+  "theme": {
+    "title": "外观设置",
+    "label": "主题",
+    "hint": "选择浅色或深色模式",
+    "system": "跟随系统",
+    "light": "浅色",
+    "dark": "深色"
+  },
+
   "duration": {
     "title": "时长设置",
     "work": {
@@ -56,5 +65,17 @@
     "title": "语言设置",
     "label": "应用语言",
     "hint": "更改显示语言"
+  },
+
+  "about": {
+    "title": "关于",
+    "privacy_policy": {
+      "label": "隐私政策",
+      "hint": "查看隐私政策"
+    },
+    "version": {
+      "label": "版本",
+      "hint": "当前应用版本"
+    }
   }
 }
