@@ -113,25 +113,22 @@ export default function TimerScreen() {
 
       {/* 控制按钮 */}
       <View style={styles.controlsContainer}>
-        {/* 开始/恢复按钮 */}
-        <TouchableOpacity
-          style={[
-            styles.primaryButton,
-            { backgroundColor: colors.primary },
-            !canStart && styles.buttonDisabled,
-          ]}
-          onPress={handleStart}
-          disabled={!canStart}
-        >
-          <Ionicons
-            name={timerStatus === 'paused' ? 'play' : 'play-circle'}
-            size={24}
-            color="white"
-          />
-          <Text style={styles.primaryButtonText}>
-            {timerStatus === 'paused' ? t('timer.resume') : t('timer.start')}
-          </Text>
-        </TouchableOpacity>
+        {/* 开始/恢复按钮 - 只在可以开始时显示 */}
+        {canStart && (
+          <TouchableOpacity
+            style={[styles.primaryButton, { backgroundColor: colors.primary }]}
+            onPress={handleStart}
+          >
+            <Ionicons
+              name={timerStatus === 'paused' ? 'play' : 'play-circle'}
+              size={24}
+              color="white"
+            />
+            <Text style={styles.primaryButtonText}>
+              {timerStatus === 'paused' ? t('timer.resume') : t('timer.start')}
+            </Text>
+          </TouchableOpacity>
+        )}
 
         {/* 暂停按钮 */}
         {canPause && (
@@ -240,15 +237,14 @@ const styles = StyleSheet.create({
   },
   timerContainer: {
     alignItems: 'center',
-    marginVertical: 40,
+    marginVertical: 24,
   },
   controlsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 12,
-    paddingHorizontal: 32,
-    marginTop: 20,
-    flexWrap: 'wrap',
+    gap: 16,
+    paddingHorizontal: 24,
+    marginTop: 16,
   },
   primaryButton: {
     flexDirection: 'row',
@@ -279,12 +275,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
-  buttonDisabled: {
-    opacity: 0.5,
-  },
   hintContainer: {
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: 16,
     paddingHorizontal: 32,
   },
   hintText: {
@@ -294,7 +287,7 @@ const styles = StyleSheet.create({
   },
   progressContainer: {
     margin: 16,
-    marginTop: 32,
+    marginTop: 20,
     padding: 20,
     borderRadius: 16,
   },
