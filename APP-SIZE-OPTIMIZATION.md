@@ -219,7 +219,7 @@ npx expo-atlas
 
 ```bash
 # 1. 构建 APK
-eas build --profile production --platform android
+eas build --platform android
 
 # 2. 下载 APK
 eas build:download --platform android --output ./app.apk
@@ -358,7 +358,7 @@ const StatsScreen = lazy(() => import('./stats'));
 
 5. **重新构建并测量**
    ```bash
-   eas build --profile production --platform all
+   eas build --platform all
    ```
 
 ---

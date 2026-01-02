@@ -1012,7 +1012,7 @@ git tag v1.1.0
 git push origin main --tags
 
 # 3. 构建新版本
-eas build --profile production --platform all
+eas build --platform all
 
 # 4. 提交到商店
 eas submit --platform all --latest

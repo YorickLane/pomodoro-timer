@@ -140,7 +140,7 @@ eas build:configure
 - [ ] 准备商店描述
 - [ ] 准备应用截图
 - [ ] 配置 Hermes 引擎
-- [ ] `eas build --profile production`
+- [ ] `eas build --platform all`
 - [ ] 提交到商店
 
 ---

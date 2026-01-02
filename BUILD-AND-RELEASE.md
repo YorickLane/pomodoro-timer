@@ -261,8 +261,8 @@ git commit -m "chore: prepare for v1.0.0 release"
 # 3. 运行上架前检查
 /skill pre-release-check
 
-# 4. 构建 Production 版本
-eas build --profile production --platform all
+# 4. 构建 Production 版本（默认 profile 就是 production）
+eas build --platform all
 
 # 构建时间：约 10-20 分钟
 # 会输出下载链接
@@ -271,10 +271,10 @@ eas build --profile production --platform all
 **只构建单个平台：**
 ```bash
 # 仅 iOS
-eas build --profile production --platform ios
+eas build --platform ios
 
 # 仅 Android
-eas build --profile production --platform android
+eas build --platform android
 ```
 
 ### 4.4 下载构建产物
@@ -378,14 +378,14 @@ eas build --profile development --platform all
 # Preview Build
 eas build --profile preview --platform all
 
-# Production Build
-eas build --profile production --platform all
+# Production Build（默认 profile 就是 production，无需指定）
+eas build --platform all
 
 # 仅 iOS
-eas build --profile production --platform ios
+eas build --platform ios
 
 # 仅 Android
-eas build --profile production --platform android
+eas build --platform android
 ```
 
 ### 提交命令
@@ -674,8 +674,8 @@ git commit -m "chore: prepare for v1.0.0 release"
 # 3. Run pre-release checks
 /skill pre-release-check
 
-# 4. Build Production version
-eas build --profile production --platform all
+# 4. Build Production version (default profile is production)
+eas build --platform all
 
 # Build time: ~10-20 minutes
 ```
@@ -762,8 +762,8 @@ eas build --profile development --platform all
 # Preview Build
 eas build --profile preview --platform all
 
-# Production Build
-eas build --profile production --platform all
+# Production Build (default profile, no need to specify)
+eas build --platform all
 ```
 
 ### Submit Commands
